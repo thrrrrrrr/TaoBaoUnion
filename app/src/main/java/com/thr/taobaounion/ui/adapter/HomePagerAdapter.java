@@ -33,7 +33,9 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) { //应该有类别多个碎片，是商品显示部分
-        HomePagerFragment homePagerFragment = new HomePagerFragment();
+        LogUtils.d(this, "getPage-> " + position);
+        Categories.DataBean dataBean = categoryList.get(position);
+        HomePagerFragment homePagerFragment = HomePagerFragment.newInstance(dataBean);
         return homePagerFragment;
     }
 
