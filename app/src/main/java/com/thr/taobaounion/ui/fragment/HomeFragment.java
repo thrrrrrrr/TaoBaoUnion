@@ -1,6 +1,8 @@
 package com.thr.taobaounion.ui.fragment;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -29,6 +31,7 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
 
     @Override
     protected int getRootViewResId() {
+        //子类返回布局xml
         return R.layout.fragment_home;
     }
 
@@ -50,6 +53,11 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     }
 
     @Override
+    protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.base_home_fragment_layout, container, false);
+    }
+
+    @Override
     protected void release() {
         //释放presenter
         if (homePresenter != null) {
@@ -65,14 +73,34 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
 
     @Override
     public void onCategoriesLoaded(Categories categories) {
-        //网络请求返回的类在这里
+        //网络请求返回的数据调用此方法
+        setUpState(State.SUCCESS);
         LogUtils.d(this, "HomeFragment中分类加载...");
         if (homePagerAdapter != null) {
             homePagerAdapter.setCategories(categories);
         }
     }
 
+    @Override
+    public void onNetworkError() {
+        setUpState(State.ERROR);
+    }
 
+    @Override
+    public void onLoading() {
+        setUpState(State.LOADING);
+    }
 
+    @Override
+    public void onEmpty() {
+        setUpState(State.EMPTY);
+    }
 
+    @Override
+    protected void onRetryClick() {
+        //重写网络错误充实
+        if (homePresenter != null) {
+            homePresenter.getCategories();
+        }
+    }
 }
