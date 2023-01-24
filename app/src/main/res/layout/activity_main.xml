@@ -19,6 +19,7 @@
         android:background="@color/white"
         app:menu="@menu/my_navigation_items"
         app:itemTextColor="@drawable/navigation_bar_color"
-        app:itemIconTint="@drawable/navigation_bar_color"/>
+        app:itemIconTint="@drawable/navigation_bar_color"
+        />
 
 </RelativeLayout>
