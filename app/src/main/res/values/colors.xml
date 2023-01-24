@@ -10,4 +10,6 @@
     <color name="colorPrimary">#F5A623</color>
     <color name="colorPrimaryVariant">#F5A623</color>
     <color name="grey">#7b7b7b</color>
+    <color name="colorTabSelected">#ffffff</color>
+    <color name="colorTabNormal">#99ffffff</color>
 </resources>

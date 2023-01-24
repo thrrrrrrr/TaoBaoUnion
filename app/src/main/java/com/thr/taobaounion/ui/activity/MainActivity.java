@@ -20,6 +20,7 @@ import com.thr.taobaounion.utils.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,15 +30,24 @@ public class MainActivity extends AppCompatActivity {
     private SaleFragment saleFragment;
     private SearchFragment searchFragment;//碎片
     private FragmentManager fm;//碎片管理
+    private Unbinder bind;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        bind = ButterKnife.bind(this);
         initListener();
         initFragment();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (bind != null) {
+            bind.unbind();
+        }
     }
 
     private void initFragment() {
