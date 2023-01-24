@@ -51,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
     private void initListener() {
         navigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.home) {
-                LogUtils.d(this.getClass(), "切换到首页");
+                LogUtils.d(this, "切换到首页");
                 switchFragment(homeFragment);
             } else if (item.getItemId() == R.id.sale) {
-                LogUtils.d(this.getClass(), "切换到特惠");
+                LogUtils.d(this, "切换到特惠");
                 switchFragment(saleFragment);
             } else if (item.getItemId() == R.id.search) {
-                LogUtils.d(this.getClass(), "切换到搜索");
+                LogUtils.d(this, "切换到搜索");
                 switchFragment(searchFragment);
             }
             return true;

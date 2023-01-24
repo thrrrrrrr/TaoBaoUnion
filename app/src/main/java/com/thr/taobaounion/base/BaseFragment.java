@@ -15,7 +15,28 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return loadRootView(inflater, container, savedInstanceState);
+        View view = loadRootView(inflater, container, savedInstanceState);
+        initPresenter();
+        loadData();
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        release();
+    }
+
+    protected void release() {
+        //释放资源
+    }
+
+    protected void initPresenter() {
+        //创建presenter
+    }
+
+    protected void loadData() {
+        //加载数据
     }
 
     private View loadRootView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
