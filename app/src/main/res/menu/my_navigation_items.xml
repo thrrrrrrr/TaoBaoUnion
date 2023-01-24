@@ -4,7 +4,7 @@
         android:title="@string/text_home"
         android:icon="@mipmap/home_normal" />
 <!--    精选接口没了-->
-    <item android:id="@+id/red_packet"
+    <item android:id="@+id/sale"
         android:title="@string/text_red_packet"
         android:icon="@mipmap/red_packet_normal" />
     <item android:id="@+id/search"
