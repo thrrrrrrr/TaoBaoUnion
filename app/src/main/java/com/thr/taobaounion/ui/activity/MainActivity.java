@@ -13,16 +13,22 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.thr.taobaounion.R;
 import com.thr.taobaounion.ui.fragment.HomeFragment;
+import com.thr.taobaounion.utils.LogUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    BottomNavigationView navigationView;//底部导航栏
+    @BindView(R.id.main_navigation_bar)
+    public BottomNavigationView navigationView;//底部导航栏
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initView();
         initListener();
     }
@@ -30,19 +36,17 @@ public class MainActivity extends AppCompatActivity {
     private void initListener() {
         navigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.home) {
-                Log.d(TAG, "切换到首页");
+                LogUtils.d(this.getClass(), "切换到首页");
             } else if (item.getItemId() == R.id.sale) {
-                Log.d(TAG, "切换到特惠");
+                LogUtils.d(this.getClass(), "切换到特惠");
             } else if (item.getItemId() == R.id.search) {
-                Log.d(TAG, "切换到搜索");
+                LogUtils.d(this.getClass(), "切换到搜索");
             }
             return true;
         });
     }
 
     private void initView() {
-        navigationView = findViewById(R.id.main_navigation_bar);
-
 
         HomeFragment homeFragment = new HomeFragment();
         FragmentManager fm = getSupportFragmentManager();
