@@ -54,9 +54,11 @@ public abstract class BaseFragment extends Fragment {
         bind = ButterKnife.bind(this, rootView); //初始化黄油刀
         initView(rootView); // 子类重写,子类都启动
         initPresenter();// 子类重写
+        initListener();//子类重写
         loadData();// 子类重写
         return rootView;
     }
+
 
     protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.base_fragment_layout, container, false);
@@ -138,6 +140,10 @@ public abstract class BaseFragment extends Fragment {
 
     protected void initPresenter() {
         //创建presenter
+    }
+
+    protected void initListener() {
+        //创建监听器
     }
 
     protected void loadData() {

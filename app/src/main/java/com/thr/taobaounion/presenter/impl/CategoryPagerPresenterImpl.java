@@ -86,12 +86,15 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
 
     private void handleHomePagerContentResult(HomePagerContent pageContent, int categoryId) {
         //通知ui曾更新数据
+        List<HomePagerContent.DataBean> data = pageContent.getData();
         for (ICategoryPagerCallback callback : callbacks) {
             if (callback.getCategoryId() == categoryId) {
                 if (pageContent == null | pageContent.getData().size() == 0) {
                     callback.onEmpty();
                 } else {
-                    callback.onContentLoaded(pageContent.getData());
+                    List<HomePagerContent.DataBean> looperData = data.subList(data.size() - 5, data.size());
+                    callback.onLopperListLoaded(looperData);
+                    callback.onContentLoaded(data);
                 }
             }
         }
