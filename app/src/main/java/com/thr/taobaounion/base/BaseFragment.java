@@ -52,7 +52,7 @@ public abstract class BaseFragment extends Fragment {
         baseContainer = rootView.findViewById(R.id.base_container);
         loadStateView(inflater, container); //首页、特惠、搜索中多种状态的碎片的叠加
         bind = ButterKnife.bind(this, rootView); //初始化黄油刀
-        initView(rootView); // 子类重写
+        initView(rootView); // 子类重写,子类都启动
         initPresenter();// 子类重写
         loadData();// 子类重写
         return rootView;

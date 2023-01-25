@@ -53,6 +53,12 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     }
 
     @Override
+    protected void loadData() {
+        //加载数据
+        homePresenter.getCategories();
+    }
+
+    @Override
     protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.base_home_fragment_layout, container, false);
     }
@@ -63,12 +69,6 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
         if (homePresenter != null) {
             homePresenter.unregisterViewCallback(this);
         }
-    }
-
-    @Override
-    protected void loadData() {
-        //加载数据
-        homePresenter.getCategories();
     }
 
     @Override

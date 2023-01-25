@@ -1,8 +1,6 @@
 package com.thr.taobaounion.base;
 
-import com.thr.taobaounion.view.IHomeCallback;
-
-public interface BasePresenter<T> {
+public interface IBasePresenter<T> {
     /**
      * 获取ui通知接口
      * @param callback

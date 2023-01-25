@@ -1,6 +1,6 @@
 package com.thr.taobaounion.base;
 
-public interface BaseCallback {
+public interface IBaseCallback {
     void onNetworkError();
 
     void onLoading();
