@@ -1,22 +1,13 @@
 package com.thr.taobaounion.presenter;
 
+import com.thr.taobaounion.base.BasePresenter;
 import com.thr.taobaounion.view.IHomeCallback;
 
-public interface IHomePresenter {
+public interface IHomePresenter extends BasePresenter<IHomeCallback> {
     /**
      * 获取商品分类
      */
     void getCategories();
 
-    /**
-     * 获取ui通知接口
-     * @param callback
-     */
-    void registerCallback(IHomeCallback callback);
 
-    /**
-     * 取消注册ui更新接口
-     * @param callback
-     */
-    void unregisterCallback(IHomeCallback callback);
 }
