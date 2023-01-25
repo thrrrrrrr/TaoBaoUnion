@@ -12,4 +12,5 @@
     <color name="grey">#7b7b7b</color>
     <color name="colorTabSelected">#ffffff</color>
     <color name="colorTabNormal">#99ffffff</color>
+    <color name="color_tmall">#d0021b</color>
 </resources>

@@ -4,21 +4,29 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.thr.taobaounion.R;
 import com.thr.taobaounion.base.BaseFragment;
 import com.thr.taobaounion.model.domain.Categories;
 import com.thr.taobaounion.model.domain.HomePagerContent;
 import com.thr.taobaounion.presenter.ICategoryPagerPresenter;
 import com.thr.taobaounion.presenter.impl.CategoryPagerPresenterImpl;
+import com.thr.taobaounion.ui.adapter.HomePagerContentAdapter;
 import com.thr.taobaounion.utils.Constants;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.view.ICategoryPagerCallback;
 
 import java.util.List;
 
+import butterknife.BindView;
+
 public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback {
 
     private ICategoryPagerPresenter categoryPagerPresenter;
+    private int materialId;
+    private HomePagerContentAdapter mContentListAdapter;
 
     public static HomePagerFragment newInstance(Categories.DataBean category) {
         HomePagerFragment homePagerFragment = new HomePagerFragment();
@@ -30,6 +38,9 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         return homePagerFragment;
     }
 
+    @BindView(R.id.home_pager_content_list)
+    public RecyclerView mContentList;
+
     @Override
     protected int getRootViewResId() {
         return R.layout.fragment_home_pager;
@@ -37,7 +48,12 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void initView(View view) {
-        setUpState(State.SUCCESS);
+        //设置布局管理器
+        mContentList.setLayoutManager(new LinearLayoutManager(getContext()));
+        //创建适配器
+        mContentListAdapter = new HomePagerContentAdapter();
+        //设置适配器
+        mContentList.setAdapter(mContentListAdapter);
     }
 
     @Override
@@ -50,7 +66,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     protected void loadData() {
         Bundle arguments = getArguments();
         String title = arguments.getString(Constants.KEY_HOME_PAGER_TITLE);
-        int materialId = arguments.getInt(Constants.KEY_HOME_PAGER_ID);
+        materialId = arguments.getInt(Constants.KEY_HOME_PAGER_ID);
         LogUtils.d(this, "title: " + title + ", " + "materialId: " + materialId);
         //TODO：加载数据
         if (categoryPagerPresenter != null) {
@@ -65,34 +81,41 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         }
     }
 
+    public int getCategoryId() {
+        return materialId;
+    }
+
     //均是CallBack接口中的
     @Override
     public void onContentLoaded(List<HomePagerContent.DataBean> contents) {
+        //数据列表加载
+        mContentListAdapter.setData(contents);
+        setUpState(State.SUCCESS);
+    }
+
+    @Override
+    public void onNetworkError() {
+        //网络错误
+        setUpState(State.ERROR);
+    }
+
+    @Override
+    public void onLoading() {
+        setUpState(State.LOADING);
+    }
+
+    @Override
+    public void onEmpty() {
+        setUpState(State.EMPTY);
+    }
+
+    @Override
+    public void onLoaderMoreError() {
 
     }
 
     @Override
-    public void onNetworkError(int categoryId) {
-
-    }
-
-    @Override
-    public void onLoading(int categoryId) {
-
-    }
-
-    @Override
-    public void onEmpty(int categoryId) {
-
-    }
-
-    @Override
-    public void onLoaderMoreError(int categoryId) {
-
-    }
-
-    @Override
-    public void onLoaderMoreEmpty(int categoryId) {
+    public void onLoaderMoreEmpty() {
 
     }
 
