@@ -13,4 +13,5 @@
     <color name="colorTabSelected">#ffffff</color>
     <color name="colorTabNormal">#99ffffff</color>
     <color name="color_tmall">#d0021b</color>
+    <color name="color_bg_page">#efeeee</color>
 </resources>

@@ -79,7 +79,7 @@ public class HomePagerContent {
         private int tmall_play_activity_start_time;
         private int user_type;
         private int volume;
-        private String zk_final_price;
+        private double zk_final_price;
 
         @Override
         public String toString() {
@@ -322,11 +322,11 @@ public class HomePagerContent {
             this.volume = volume;
         }
 
-        public String getZk_final_price() {
+        public double getZk_final_price() {
             return zk_final_price;
         }
 
-        public void setZk_final_price(String zk_final_price) {
+        public void setZk_final_price(double zk_final_price) {
             this.zk_final_price = zk_final_price;
         }
 

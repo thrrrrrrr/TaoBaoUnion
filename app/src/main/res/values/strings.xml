@@ -5,4 +5,7 @@
     <string name="text_search">搜索</string>
     <string name="text_network_error_tips">网络错误，请点击重试</string>
     <string name="text_search_tips">搜您想搜的宝贝</string>
+    <string name="item_off_price">省%d元</string>
+    <string name="item_origin_price">￥%.2f</string>
+    <string name="item_sell_count">%d人已购买</string>
 </resources>
