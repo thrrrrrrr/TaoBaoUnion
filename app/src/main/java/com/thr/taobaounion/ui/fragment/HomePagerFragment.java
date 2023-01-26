@@ -26,6 +26,7 @@ import com.thr.taobaounion.presenter.ICategoryPagerPresenter;
 import com.thr.taobaounion.presenter.impl.CategoryPagerPresenterImpl;
 import com.thr.taobaounion.ui.adapter.HomePagerContentAdapter;
 import com.thr.taobaounion.ui.adapter.LooperPagerAdapter;
+import com.thr.taobaounion.ui.custom.TbNestedSerollView;
 import com.thr.taobaounion.utils.Constants;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.SizeUtils;
@@ -62,6 +63,13 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @BindView(R.id.home_pager_parent)
     public LinearLayout homePagerParent;
+
+    //TbNestedSerollView 给他设置高度,解决NestedSerollView与RecyclerView的冲突
+    @BindView(R.id.home_pager_nested_scroll)
+    public TbNestedSerollView homePagerNestedScroll;
+
+    @BindView(R.id.home_header_container)
+    public LinearLayout homeHeaderContainer;
 
 
     public static HomePagerFragment newInstance(Categories.DataBean category) {
@@ -113,10 +121,15 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void initListener() {
-        //设置RecyclerView的高 动态
+        //设置RecyclerView的高 动态，看不太懂不做了擦
         homePagerParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                //设置同步下滑的阈值，把上面轮播图和文字的高度给到TbNestedscrollView里面的阈值
+                int height = homeHeaderContainer.getMeasuredHeight();
+                LogUtils.d(this, "阈值是 : " + height);
+                homePagerNestedScroll.setHeaderHeight(height);
+
                 int measuredHeight = homePagerParent.getMeasuredHeight();
                 LogUtils.d(this, "measuredHeight: " + measuredHeight);
                 ViewGroup.LayoutParams layoutParams = mContentList.getLayoutParams();

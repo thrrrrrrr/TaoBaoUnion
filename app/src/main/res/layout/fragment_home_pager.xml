@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:id="@+id/home_pager_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_bg_page"
     android:orientation="vertical">
@@ -9,13 +9,14 @@
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/home_pager_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <com.scwang.smart.refresh.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
-        <androidx.core.widget.NestedScrollView
+        <com.thr.taobaounion.ui.custom.TbNestedSerollView
+            android:id="@+id/home_pager_nested_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -23,40 +24,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:layout_marginBottom="14dp">
 
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/looper_pager"
+                <LinearLayout
+                    android:id="@+id/home_header_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
-                        android:overScrollMode="never" />
+                        android:layout_marginBottom="14dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/looper_point_container"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal"
-                        android:gravity="center"/>
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/looper_pager"
+                            android:layout_width="match_parent"
+                            android:layout_height="160dp"
+                            android:overScrollMode="never" />
 
-                </RelativeLayout>
+                        <LinearLayout
+                            android:id="@+id/looper_point_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:orientation="horizontal" />
 
-                <include layout="@layout/include_title_home_pager" />
+                    </RelativeLayout>
+
+                    <include layout="@layout/include_title_home_pager" />
+
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/home_pager_content_list"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        </com.thr.taobaounion.ui.custom.TbNestedSerollView>
 
         <com.scwang.smart.refresh.footer.BallPulseFooter
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </LinearLayout>
