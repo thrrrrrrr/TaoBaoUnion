@@ -4,6 +4,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +60,9 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     @BindView(R.id.home_pager_refresh)
     public SmartRefreshLayout homePagerRefresh;
 
+    @BindView(R.id.home_pager_parent)
+    public LinearLayout homePagerParent;
+
 
     public static HomePagerFragment newInstance(Categories.DataBean category) {
         HomePagerFragment homePagerFragment = new HomePagerFragment();
@@ -108,6 +113,21 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void initListener() {
+        //设置RecyclerView的高 动态
+        homePagerParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int measuredHeight = homePagerParent.getMeasuredHeight();
+                LogUtils.d(this, "measuredHeight: " + measuredHeight);
+                ViewGroup.LayoutParams layoutParams = mContentList.getLayoutParams();
+                layoutParams.height = measuredHeight;
+                mContentList.setLayoutParams(layoutParams);
+                if (measuredHeight != 0) {
+                    homePagerParent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            }
+        });
+
         looperPgaer.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}

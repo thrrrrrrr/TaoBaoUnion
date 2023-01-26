@@ -40,6 +40,7 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
         HomePagerContent.DataBean dataBean = data.get(position);
         //设置数据
+        LogUtils.d(this, "position: " + position);
         holder.setData(dataBean);
     }
 
@@ -90,7 +91,10 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
             //
             title.setText(dataBean.getTitle());
             //
-            String url = UrlUtils.getCoverPath(dataBean.getPict_url());
+            ViewGroup.LayoutParams layoutParams = cover.getLayoutParams();
+            int size = layoutParams.width;
+            size = size/100*100 + 100;
+            String url = UrlUtils.getCoverPath(dataBean.getPict_url(), size);
             Glide.with(itemView.getContext()).load(url).into(cover);
             //
             //LogUtils.d(this, "优惠" + dataBean.getCoupon_amount());
