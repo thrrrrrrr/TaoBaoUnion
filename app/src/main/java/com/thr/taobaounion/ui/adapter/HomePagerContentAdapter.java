@@ -1,5 +1,6 @@
 package com.thr.taobaounion.ui.adapter;
 
+import android.app.role.RoleManager;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,13 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
         data.clear();
         data.addAll(contents);
         notifyDataSetChanged();
+    }
+
+    public void addData(List<HomePagerContent.DataBean> contents) {
+        int oldSize = data.size();
+        data.addAll(contents);
+        //通知更新
+        notifyItemRangeChanged(oldSize, contents.size());
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder {

@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.thr.taobaounion.R;
 import com.thr.taobaounion.base.BaseFragment;
 import com.thr.taobaounion.model.domain.Categories;
@@ -45,8 +49,13 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     @BindView(R.id.home_pager_title)
     public TextView currentPageTitle;
 
+    //五个点的容器
     @BindView(R.id.looper_point_container)
     public LinearLayout looperPointContainer;
+
+    //smartRefresh容器
+    @BindView(R.id.home_pager_refresh)
+    public SmartRefreshLayout homePagerRefresh;
 
 
     public static HomePagerFragment newInstance(Categories.DataBean category) {
@@ -83,6 +92,11 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         mLooperPagerAdapter = new LooperPagerAdapter();
         //设置轮播图适配器
         looperPgaer.setAdapter(mLooperPagerAdapter);
+        //设置Refresh相关属性
+        homePagerRefresh.setEnableRefresh(false);
+        homePagerRefresh.setEnableLoadMore(true);
+        homePagerRefresh.setEnableAutoLoadMore(true);
+        homePagerRefresh.setEnableOverScrollDrag(true);
     }
 
     @Override
@@ -109,6 +123,22 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
             @Override
             public void onPageScrollStateChanged(int state) {}
+        });
+
+        homePagerRefresh.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                LogUtils.d(this, "触发loadmore....");
+                homePagerRefresh.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //用Presenter去加载更多
+                        if (categoryPagerPresenter != null) {
+                            categoryPagerPresenter.loaderMore(materialId);
+                        }
+                    }
+                }, 0);
+            }
         });
     }
 
@@ -174,6 +204,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         setUpState(State.EMPTY);
     }
 
+    //loadmore
     @Override
     public void onLoaderMoreError() {
 
@@ -186,9 +217,15 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     public void onLoaderMoreLoaded(List<HomePagerContent.DataBean> contents) {
-
+        //添加到适配器的底部
+        mContentListAdapter.addData(contents);
+        homePagerRefresh.finishLoadMore();
+        Toast toast = Toast.makeText(getContext(), null, Toast.LENGTH_SHORT);
+        toast.setText("加载了" + contents.size() + "条记录");
+        toast.show();
     }
 
+    //轮播图
     @Override
     public void onLopperListLoaded(List<HomePagerContent.DataBean> contents) {
         LogUtils.d(this, "looper: size :" + contents.size());

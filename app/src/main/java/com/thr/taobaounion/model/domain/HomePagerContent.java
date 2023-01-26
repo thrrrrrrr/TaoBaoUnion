@@ -12,9 +12,7 @@ public class HomePagerContent {
     @Override
     public String toString() {
         return "HomePagerContent{" +
-                "success=" + success +
                 ", code=" + code +
-                ", message='" + message + '\'' +
                 ", data=" + data +
                 '}';
     }
@@ -85,30 +83,7 @@ public class HomePagerContent {
         public String toString() {
             return "DataBean{" +
                     "category_id=" + category_id +
-                    ", click_url='" + click_url + '\'' +
-                    ", commission_rate='" + commission_rate + '\'' +
-                    ", coupon_amount=" + coupon_amount +
-                    ", coupon_click_url='" + coupon_click_url + '\'' +
-                    ", coupon_end_time='" + coupon_end_time + '\'' +
-                    ", coupon_remain_count=" + coupon_remain_count +
-                    ", coupon_share_url='" + coupon_share_url + '\'' +
-                    ", coupon_start_fee='" + coupon_start_fee + '\'' +
-                    ", coupon_start_time='" + coupon_start_time + '\'' +
-                    ", coupon_total_count=" + coupon_total_count +
-                    ", item_description='" + item_description + '\'' +
-                    ", item_id='" + item_id + '\'' +
-                    ", level_one_category_id=" + level_one_category_id +
-                    ", level_one_category_name='" + level_one_category_name + '\'' +
-                    ", pict_url='" + pict_url + '\'' +
-                    ", reserve_price='" + reserve_price + '\'' +
-                    ", seller_id=" + seller_id +
-                    ", short_title=" + short_title +
-                    ", small_images=" + small_images +
-                    ", sub_title='" + sub_title + '\'' +
                     ", title='" + title + '\'' +
-                    ", tmall_play_activity_end_time=" + tmall_play_activity_end_time +
-                    ", tmall_play_activity_start_time=" + tmall_play_activity_start_time +
-                    ", user_type=" + user_type +
                     ", volume=" + volume +
                     ", zk_final_price='" + zk_final_price + '\'' +
                     '}';
