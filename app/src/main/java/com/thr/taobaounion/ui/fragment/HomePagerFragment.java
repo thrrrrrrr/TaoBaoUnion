@@ -27,6 +27,7 @@ import com.thr.taobaounion.ui.adapter.LooperPagerAdapter;
 import com.thr.taobaounion.utils.Constants;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.SizeUtils;
+import com.thr.taobaounion.utils.ToastUtils;
 import com.thr.taobaounion.view.ICategoryPagerCallback;
 
 import java.util.List;
@@ -207,12 +208,14 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     //loadmore
     @Override
     public void onLoaderMoreError() {
-
+        ToastUtils.show("网络异常请稍后重试");
+        homePagerRefresh.finishLoadMore();
     }
 
     @Override
     public void onLoaderMoreEmpty() {
-
+        ToastUtils.show("没有更多的商品了");
+        homePagerRefresh.finishLoadMore();
     }
 
     @Override
@@ -220,9 +223,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         //添加到适配器的底部
         mContentListAdapter.addData(contents);
         homePagerRefresh.finishLoadMore();
-        Toast toast = Toast.makeText(getContext(), null, Toast.LENGTH_SHORT);
-        toast.setText("加载了" + contents.size() + "条记录");
-        toast.show();
+        ToastUtils.show("加载了" + contents.size() + "条记录");
     }
 
     //轮播图

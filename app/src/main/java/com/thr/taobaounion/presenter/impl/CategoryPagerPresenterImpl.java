@@ -154,6 +154,7 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
     }
 
     private void handleLoadMoreError(int categoryId, int currentPage) {
+        //页码减
         currentPage--;
         pagesInfo.put(categoryId, currentPage);
         for (ICategoryPagerCallback callback : callbacks) {
