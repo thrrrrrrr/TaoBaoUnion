@@ -1,8 +1,5 @@
 package com.thr.taobaounion.ui.adapter;
 
-import android.util.Log;
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,7 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.thr.taobaounion.model.domain.Categories;
-import com.thr.taobaounion.ui.fragment.HomePagerFragment;
+import com.thr.taobaounion.ui.fragment.HomePageFragment;
 import com.thr.taobaounion.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) { //应该有类别多个碎片，是商品显示部分
         LogUtils.d(this, "getPage-> " + position);
         Categories.DataBean dataBean = categoryList.get(position);
-        HomePagerFragment homePagerFragment = HomePagerFragment.newInstance(dataBean);
+        HomePageFragment homePagerFragment = HomePageFragment.newInstance(dataBean);
         return homePagerFragment;
     }
 

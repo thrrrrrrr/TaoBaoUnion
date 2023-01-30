@@ -50,6 +50,10 @@ public class TicketResult {
         return getData().getTbk_tpwd_create_response().getData().getModel();
     }
 
+    public String get() {
+        return getData().getTbk_tpwd_create_response().getData().getModel();
+    }
+
     public static class DataBeanX {
         /**
          * tbk_tpwd_create_response : {"data":{"model":"￥xhQoYC66sMX￥"},"request_id":"64jzpdn6m026"}

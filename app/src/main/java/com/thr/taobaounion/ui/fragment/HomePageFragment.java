@@ -2,14 +2,12 @@ package com.thr.taobaounion.ui.fragment;
 
 import android.content.Intent;
 import android.graphics.Rect;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +23,6 @@ import com.thr.taobaounion.model.domain.Categories;
 import com.thr.taobaounion.model.domain.HomePagerContent;
 import com.thr.taobaounion.presenter.ICategoryPagerPresenter;
 import com.thr.taobaounion.presenter.ITicketPresenter;
-import com.thr.taobaounion.presenter.impl.CategoryPagerPresenterImpl;
 import com.thr.taobaounion.ui.activity.TicketActivity;
 import com.thr.taobaounion.ui.adapter.HomePagerContentAdapter;
 import com.thr.taobaounion.ui.adapter.LooperPagerAdapter;
@@ -42,7 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback, HomePagerContentAdapter.OnListItemClickListener, LooperPagerAdapter.OnLooperPageItemClickListener {
+public class HomePageFragment extends BaseFragment implements ICategoryPagerCallback, HomePagerContentAdapter.OnListItemClickListener, LooperPagerAdapter.OnLooperPageItemClickListener {
 
     private ICategoryPagerPresenter categoryPagerPresenter;
     private int materialId;
@@ -77,8 +74,8 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     public LinearLayout homeHeaderContainer;
 
 
-    public static HomePagerFragment newInstance(Categories.DataBean category) {
-        HomePagerFragment homePagerFragment = new HomePagerFragment();
+    public static HomePageFragment newInstance(Categories.DataBean category) {
+        HomePageFragment homePagerFragment = new HomePageFragment();
         Bundle bundle = new Bundle();
         //向fragment传数据，传bundle
         bundle.putString(Constants.KEY_HOME_PAGER_TITLE, category.getTitle());
@@ -147,18 +144,20 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         homePagerParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                //设置同步下滑的阈值，把上面轮播图和文字的高度给到TbNestedscrollView里面的阈值
-                int height = homeHeaderContainer.getMeasuredHeight();
-                LogUtils.d(this, "阈值是 : " + height);
-                homePagerNestedScroll.setHeaderHeight(height);
+                if (homeHeaderContainer != null && homePagerParent != null && homePagerNestedScroll !=null){
+                    //设置同步下滑的阈值，把上面轮播图和文字的高度给到TbNestedscrollView里面的阈值
+                    int height = homeHeaderContainer.getMeasuredHeight();
+                    LogUtils.d(this, "阈值是 : " + height);
+                    homePagerNestedScroll.setHeaderHeight(height);
 
-                int measuredHeight = homePagerParent.getMeasuredHeight();
-                LogUtils.d(this, "measuredHeight: " + measuredHeight);
-                ViewGroup.LayoutParams layoutParams = mContentList.getLayoutParams();
-                layoutParams.height = measuredHeight;
-                mContentList.setLayoutParams(layoutParams);
-                if (measuredHeight != 0) {
-                    homePagerParent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    int measuredHeight = homePagerParent.getMeasuredHeight();
+                    LogUtils.d(this, "measuredHeight: " + measuredHeight);
+                    ViewGroup.LayoutParams layoutParams = mContentList.getLayoutParams();
+                    layoutParams.height = measuredHeight;
+                    mContentList.setLayoutParams(layoutParams);
+                    if (measuredHeight != 0) {
+                        homePagerParent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
                 }
             }
         });
@@ -200,12 +199,14 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     private void updateLooperIndicator(int targetPosition) {
         ///切换指示器
-        for (int i = 0; i < looperPointContainer.getChildCount(); i++) {
-            View point = looperPointContainer.getChildAt(i);
-            if (i == targetPosition) {//选择点，只有一个点是
-                point.setBackgroundResource(R.drawable.shapr_looper_point_selected);
-            } else {
-                point.setBackgroundResource(R.drawable.shapr_looper_point_normal);
+        if (looperPointContainer != null) {//报空指针
+            for (int i = 0; i < looperPointContainer.getChildCount(); i++) {
+                View point = looperPointContainer.getChildAt(i);
+                if (i == targetPosition) {//选择点，只有一个点是
+                    point.setBackgroundResource(R.drawable.shapr_looper_point_selected);
+                } else {
+                    point.setBackgroundResource(R.drawable.shapr_looper_point_normal);
+                }
             }
         }
     }

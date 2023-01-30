@@ -19,7 +19,12 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
-    private State currentState = State.NONE;
+    private static State currentState = State.NONE;
+
+    public static boolean isLoading() {
+        return currentState == State.LOADING;
+    }
+
     private View loadingView;
     private View successView;
     private View errorView;

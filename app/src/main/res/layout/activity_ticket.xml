@@ -11,6 +11,7 @@
         android:background="@color/colorPrimary">
 
         <ImageView
+            android:id="@+id/ticket_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -28,30 +29,33 @@
     </RelativeLayout>
 
     <ImageView
+        android:id="@+id/ticket_cover"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="30dp"
-        android:src="@color/grey" />
+        android:src="@color/white" />
 
     <EditText
+        android:id="@+id/ticket_code"
         android:layout_width="244dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_ticket_code_bg"
         android:focusable="false"
-        android:singleLine="true"
         android:gravity="center"
+        android:singleLine="true"
         android:text="39￥ CZ0001 AO3OdT2D6Bd￥ https://m.tb.cn/h.UNQtWGQ  瓷雅多肽冻干粉套装寡肽祛痘印修护紧致抗皱抗衰老官方旗舰店正品"
         android:textColor="#5a5a5a" />
 
     <TextView
+        android:id="@+id/ticket_copy_button"
         android:layout_width="141dp"
-        android:background="@drawable/shape_button_bg"
         android:layout_height="40dp"
-        android:gravity="center"
-        android:textSize="18sp"
         android:layout_marginTop="30dp"
+        android:background="@drawable/shape_button_bg"
+        android:gravity="center"
+        android:text="@string/text_ling_quan"
         android:textColor="@color/white"
-        android:text="@string/text_ling_quan" />
+        android:textSize="18sp" />
 
 </LinearLayout>
