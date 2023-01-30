@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.thr.taobaounion.model.domain.HomePagerContent;
@@ -18,6 +17,7 @@ import java.util.List;
 public class LooperPagerAdapter extends PagerAdapter {
 
     List<HomePagerContent.DataBean> data = new ArrayList<>();
+    private OnLooperPageItemClickListener mItemClickListener = null;
 
     @Override
     public int getCount() {
@@ -47,8 +47,25 @@ public class LooperPagerAdapter extends PagerAdapter {
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(container.getContext()).load(coverPath).into(iv);
         container.addView(iv);
+
+        //设置图片点击
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mItemClickListener.onLooperItemClick(dataBean);
+            }
+        });
+
         return iv;
     }
+
+    public void setOnLooperPageItemClickListener(OnLooperPageItemClickListener listener) {
+        this.mItemClickListener = listener;
+    }
+
+    public interface OnLooperPageItemClickListener {
+        void onLooperItemClick(HomePagerContent.DataBean item);
+    };
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.thr.taobaounion.R;
+import com.thr.taobaounion.base.BaseAvtivity;
 import com.thr.taobaounion.base.BaseFragment;
 import com.thr.taobaounion.ui.fragment.HomeFragment;
 import com.thr.taobaounion.ui.fragment.SaleFragment;
@@ -22,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseAvtivity {
 
     @BindView(R.id.main_navigation_bar)
     public BottomNavigationView navigationView;//底部导航栏
@@ -30,25 +31,22 @@ public class MainActivity extends AppCompatActivity {
     private SaleFragment saleFragment;
     private SearchFragment searchFragment;//碎片
     private FragmentManager fm;//碎片管理
-    private Unbinder bind;
-
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        bind = ButterKnife.bind(this);
-        initListener();
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView() {
         initFragment();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (bind != null) {
-            bind.unbind();
-        }
+    protected void initEvent() {
+        initListener();
     }
+
 
     private void initFragment() {
         homeFragment = new HomeFragment();
@@ -88,4 +86,6 @@ public class MainActivity extends AppCompatActivity {
         lastOneFragment = targetFragment;
         transaction.commit();
     }
+
+
 }

@@ -14,6 +14,7 @@ import com.thr.taobaounion.presenter.IHomePresenter;
 import com.thr.taobaounion.presenter.impl.HomePresenterImpl;
 import com.thr.taobaounion.ui.adapter.HomePagerAdapter;
 import com.thr.taobaounion.utils.LogUtils;
+import com.thr.taobaounion.utils.PresenterManager;
 import com.thr.taobaounion.view.IHomeCallback;
 
 import butterknife.BindView;
@@ -48,7 +49,7 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     @Override
     protected void initPresenter() {
         //加载presenter
-        homePresenter = new HomePresenterImpl();
+        homePresenter = PresenterManager.getInstance().getHomePresenter();
         homePresenter.registerViewCallback(this);
     }
 

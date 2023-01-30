@@ -24,16 +24,17 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
 
     public static final int DEFAULT_PAGE = 1;
 
-    private CategoryPagerPresenterImpl() {}
-
-    private static ICategoryPagerPresenter sInstance = null;
-
-    public static ICategoryPagerPresenter getInstance() {
-        if (sInstance == null) {
-            sInstance = new CategoryPagerPresenterImpl();
-        }
-        return sInstance;
-    }
+    //统一用在Utils里了
+//    private CategoryPagerPresenterImpl() {}
+//
+//    private static ICategoryPagerPresenter sInstance = new CategoryPagerPresenterImpl();
+//
+//    public static ICategoryPagerPresenter getInstance() {
+//        if (sInstance == null) {
+//            sInstance = new CategoryPagerPresenterImpl();
+//        }
+//        return sInstance;
+//    }
 
     @Override
     public void getContentByCategoryId(int categoryId) {
