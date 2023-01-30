@@ -47,12 +47,7 @@ public class TicketResult {
 
     @Override
     public String toString() {
-        return "TicketResult{" +
-                "success=" + success +
-                ", code=" + code +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                '}';
+        return getData().getTbk_tpwd_create_response().getData().getModel();
     }
 
     public static class DataBeanX {
@@ -68,13 +63,6 @@ public class TicketResult {
 
         public void setTbk_tpwd_create_response(TbkTpwdCreateResponseBean tbk_tpwd_create_response) {
             this.tbk_tpwd_create_response = tbk_tpwd_create_response;
-        }
-
-        @Override
-        public String toString() {
-            return "DataBeanX{" +
-                    "tbk_tpwd_create_response=" + tbk_tpwd_create_response +
-                    '}';
         }
 
         public static class TbkTpwdCreateResponseBean {
@@ -102,14 +90,6 @@ public class TicketResult {
                 this.request_id = request_id;
             }
 
-            @Override
-            public String toString() {
-                return "TbkTpwdCreateResponseBean{" +
-                        "data=" + data +
-                        ", request_id='" + request_id + '\'' +
-                        '}';
-            }
-
             public static class DataBean {
                 /**
                  * model : ￥xhQoYC66sMX￥
@@ -125,12 +105,6 @@ public class TicketResult {
                     this.model = model;
                 }
 
-                @Override
-                public String toString() {
-                    return "DataBean{" +
-                            "model='" + model + '\'' +
-                            '}';
-                }
             }
         }
     }
