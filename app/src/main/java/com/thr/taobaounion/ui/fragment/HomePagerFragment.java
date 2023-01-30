@@ -326,7 +326,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         String cover = item.getPict_url();
         //拿到ticketPresenter去加载
         ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
-        ticketPresenter.getTicket(title, url, cover);
+        ticketPresenter.getTicket(title, url, cover);//可能会产生网络请求比活动初始化presenter块的情况，得多写代码
         startActivity(new Intent(getContext(), TicketActivity.class));
     }
 }

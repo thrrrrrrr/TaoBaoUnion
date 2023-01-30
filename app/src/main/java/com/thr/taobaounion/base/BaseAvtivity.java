@@ -20,7 +20,9 @@ public abstract class BaseAvtivity extends AppCompatActivity {
         bind = ButterKnife.bind(this);
         initView();
         initEvent();
+        initPresenter();
     }
+
 
     protected abstract int getLayoutResId();
 
@@ -30,12 +32,21 @@ public abstract class BaseAvtivity extends AppCompatActivity {
         if (bind != null) {
             bind.unbind();
         }
+        this.relese();
+    }
+
+    protected void relese() {
+        //子类需要就复写
     }
 
     protected void initEvent() {
-
+        //
     }
 
     protected abstract void initView();
+
+    protected void initPresenter() {
+        //
+    }
 
 }
