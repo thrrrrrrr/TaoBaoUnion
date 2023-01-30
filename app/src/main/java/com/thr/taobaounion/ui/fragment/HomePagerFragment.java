@@ -24,6 +24,7 @@ import com.thr.taobaounion.base.BaseFragment;
 import com.thr.taobaounion.model.domain.Categories;
 import com.thr.taobaounion.model.domain.HomePagerContent;
 import com.thr.taobaounion.presenter.ICategoryPagerPresenter;
+import com.thr.taobaounion.presenter.ITicketPresenter;
 import com.thr.taobaounion.presenter.impl.CategoryPagerPresenterImpl;
 import com.thr.taobaounion.ui.activity.TicketActivity;
 import com.thr.taobaounion.ui.adapter.HomePagerContentAdapter;
@@ -309,22 +310,23 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     @Override
     public void onItemClick(HomePagerContent.DataBean item) {
         //列表被点击
-        LogUtils.d(this, item.getTitle());
+//        LogUtils.d(this, item.getTitle());
         handleItemClick(item);
     }
 
     @Override
     public void onLooperItemClick(HomePagerContent.DataBean item) {
-        LogUtils.d(this, item.getTitle());
+//        LogUtils.d(this, item.getTitle());
         handleItemClick(item);
     }
 
     private void handleItemClick(HomePagerContent.DataBean item) {
-        //TODO 处理数据
         String title = item.getTitle();
         String url = item.getClick_url();
         String cover = item.getPict_url();
         //拿到ticketPresenter去加载
+        ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
+        ticketPresenter.getTicket(title, url, cover);
         startActivity(new Intent(getContext(), TicketActivity.class));
     }
 }

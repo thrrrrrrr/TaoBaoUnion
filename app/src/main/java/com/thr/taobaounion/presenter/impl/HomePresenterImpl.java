@@ -22,8 +22,8 @@ public class HomePresenterImpl implements IHomePresenter {
         if (mcallback != null) {
             mcallback.onLoading();
         }
-        Retrofit retrofit = RetrofitManager.getInstance().getRetrofit();
-        API api = retrofit.create(API.class);
+//        Retrofit retrofit = RetrofitManager.getInstance().getRetrofit();
+//        API api = retrofit.create(API.class);
         Call<Categories> task = api.getCategories();
         task.enqueue(new Callback<Categories>() {
             @Override

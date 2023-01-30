@@ -76,8 +76,8 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
     }
 
     private Call<HomePagerContent> createNetworktask(int categoryId, Integer targetPage) {
-        Retrofit retrofit = RetrofitManager.getInstance().getRetrofit();
-        API api = retrofit.create(API.class);
+//        Retrofit retrofit = RetrofitManager.getInstance().getRetrofit();
+//        API api = retrofit.create(API.class);
         Call<HomePagerContent> task = api.getHomePagerContent(categoryId, targetPage);
         return task;
     }
