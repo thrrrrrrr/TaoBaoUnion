@@ -9,6 +9,6 @@
     <string name="item_origin_price">￥%.2f</string>
     <string name="item_sell_count">%d人已购买</string>
     <string name="text_tao_kou_ling">淘口令</string>
-    <string name="text_ling_quan">领券</string>
     <string name="text_loading">加载中..</string>
+    <string name="text_load_img_error">加载图片失败</string>
 </resources>

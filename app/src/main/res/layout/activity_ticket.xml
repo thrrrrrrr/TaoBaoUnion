@@ -28,12 +28,34 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/ticket_cover"
+    <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="30dp"
-        android:src="@color/white" />
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:id="@+id/ticket_cover"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:visibility="gone"
+            android:src="@color/white" />
+
+        <TextView
+            android:id="@+id/ticket_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/text_loading" />
+
+        <TextView
+            android:id="@+id/ticket_error"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/text_load_img_error" />
+
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/ticket_code"
@@ -44,7 +66,7 @@
         android:focusable="false"
         android:gravity="center"
         android:singleLine="true"
-        android:text="39￥ CZ0001 AO3OdT2D6Bd￥ https://m.tb.cn/h.UNQtWGQ  瓷雅多肽冻干粉套装寡肽祛痘印修护紧致抗皱抗衰老官方旗舰店正品"
+        android:text=""
         android:textColor="#5a5a5a" />
 
     <TextView
@@ -54,7 +76,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/shape_button_bg"
         android:gravity="center"
-        android:text="@string/text_ling_quan"
+        android:text=""
         android:textColor="@color/white"
         android:textSize="18sp" />
 

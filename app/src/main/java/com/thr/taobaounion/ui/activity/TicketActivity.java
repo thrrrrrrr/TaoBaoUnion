@@ -1,6 +1,14 @@
 package com.thr.taobaounion.ui.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +20,7 @@ import com.thr.taobaounion.model.domain.TicketResult;
 import com.thr.taobaounion.presenter.ITicketPresenter;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.PresenterManager;
+import com.thr.taobaounion.utils.ToastUtils;
 import com.thr.taobaounion.utils.UrlUtils;
 import com.thr.taobaounion.view.ITicketPagerCallback;
 
@@ -22,8 +31,16 @@ public class TicketActivity extends BaseAvtivity implements ITicketPagerCallback
 
     private ITicketPresenter ticketPresenter;
 
+    private boolean hasTaoBAo = false;
+
     @BindView(R.id.ticket_cover)
     public ImageView mCover;
+
+    @BindView(R.id.ticket_loading)
+    public TextView ticketLoading;
+
+    @BindView(R.id.ticket_error)
+    public TextView ticketError;
 
     @BindView(R.id.ticket_code)
     public EditText mTicketCode;
@@ -35,6 +52,28 @@ public class TicketActivity extends BaseAvtivity implements ITicketPagerCallback
     public void back() {
         finish();
     }
+
+    @OnClick(R.id.ticket_copy_button)
+    public void copyOrEnter() {
+        String s = mTicketCode.getText().toString().trim();
+        ClipboardManager systemService = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData data = ClipData.newPlainText("taobao_ticket_code", s);
+        systemService.setPrimaryClip(data);
+        ToastUtils.show("复制淘口令成功！");
+        if (hasTaoBAo) {
+            Intent intent = new Intent();
+//            intent.setAction("android.intent.action.MAIN");
+//            intent.addCategory("android.intent.category.LAUNCHER");
+            intent.setComponent(new ComponentName("com.taobao.taobao", "com.taobao.tao.TBMainActivity"));
+            LogUtils.d(this, "启动淘宝");
+            startActivity(intent);
+        }
+
+    }
+
+//    public void retry() {
+//        //不写了
+//    }
 
     @Override
     protected int getLayoutResId() {
@@ -54,7 +93,19 @@ public class TicketActivity extends BaseAvtivity implements ITicketPagerCallback
     @Override
     protected void initPresenter() {
         ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
-        ticketPresenter.registerViewCallback(this);
+        ticketPresenter.registerViewCallback(this);//把自己（ui）传给presenter
+        //判断是否安装淘宝
+        //act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.taobao.taobao/com.taobao.tao.welcome.Welcome
+        PackageManager pm = getPackageManager();
+        try {
+            PackageInfo packageInfo = pm.getPackageInfo("com.taobao.taobao", PackageManager.MATCH_UNINSTALLED_PACKAGES);
+            hasTaoBAo = packageInfo!=null;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            hasTaoBAo = false;
+        }
+        LogUtils.d(this, "有无淘宝 : " + hasTaoBAo);
+        copyButton.setText(hasTaoBAo ? "立即领券" : "复制淘口令");
     }
 
     @Override
@@ -75,11 +126,17 @@ public class TicketActivity extends BaseAvtivity implements ITicketPagerCallback
         if (result != null && result.get() != null) {
             mTicketCode.setText(result.get());
         }
+        ticketLoading.setVisibility(View.GONE);
+        ticketError.setVisibility(View.GONE);
+        mCover.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onNetworkError() {
         LogUtils.d(this, "失败");
+        ticketLoading.setVisibility(View.GONE);
+        ticketError.setVisibility(View.VISIBLE);
+        mCover.setVisibility(View.GONE);
     }
 
     @Override

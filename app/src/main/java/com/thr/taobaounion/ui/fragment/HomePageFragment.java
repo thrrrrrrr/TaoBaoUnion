@@ -323,7 +323,7 @@ public class HomePageFragment extends BaseFragment implements ICategoryPagerCall
 
     private void handleItemClick(HomePagerContent.DataBean item) {
         String title = item.getTitle();
-        String url = item.getClick_url();
+        String url = item.getClick_url(); //跳转的连接
         String cover = item.getPict_url();
         //拿到ticketPresenter去加载
         ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
