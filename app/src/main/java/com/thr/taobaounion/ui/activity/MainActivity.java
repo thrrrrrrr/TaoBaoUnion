@@ -74,9 +74,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private BaseFragment lastOneFragment = null;
     private void switchFragment(BaseFragment targetFragment) {
+        //修改成 add和 hide的方式来切换，避免重复加载
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.main_page_container, targetFragment);
+        if (!targetFragment.isAdded()) {
+            transaction.add(R.id.main_page_container, targetFragment);
+        }
+        if (lastOneFragment != null) {
+            transaction.hide(lastOneFragment);
+            transaction.show(targetFragment);
+        }
+        lastOneFragment = targetFragment;
         transaction.commit();
     }
 }

@@ -26,6 +26,7 @@ import com.thr.taobaounion.presenter.ICategoryPagerPresenter;
 import com.thr.taobaounion.presenter.impl.CategoryPagerPresenterImpl;
 import com.thr.taobaounion.ui.adapter.HomePagerContentAdapter;
 import com.thr.taobaounion.ui.adapter.LooperPagerAdapter;
+import com.thr.taobaounion.ui.custom.AutoLooperViewPager;
 import com.thr.taobaounion.ui.custom.TbNestedSerollView;
 import com.thr.taobaounion.utils.Constants;
 import com.thr.taobaounion.utils.LogUtils;
@@ -47,7 +48,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     public RecyclerView mContentList;
 
     @BindView(R.id.looper_pager)
-    public ViewPager looperPgaer;
+    public AutoLooperViewPager looperPgaer;
     private LooperPagerAdapter mLooperPagerAdapter;
 
     @BindView(R.id.home_pager_title)
@@ -80,6 +81,20 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         bundle.putInt(Constants.KEY_HOME_PAGER_ID, category.getId());
         homePagerFragment.setArguments(bundle);
         return homePagerFragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //其调用自动轮播
+        looperPgaer.startLoop();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //关闭自动轮播
+        looperPgaer.stopLoop();
     }
 
     @Override
