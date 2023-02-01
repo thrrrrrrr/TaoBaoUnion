@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ISearchCallback extends IBaseCallback {
     //全部都是回调的方法
-    void onHistoriesLoaded();
+    void onHistoriesLoaded(List<String> list);
 
     void onHistoriesDeleted();
 

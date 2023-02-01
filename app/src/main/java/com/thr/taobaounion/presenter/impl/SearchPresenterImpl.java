@@ -3,9 +3,11 @@ package com.thr.taobaounion.presenter.impl;
 import com.thr.taobaounion.model.domain.SearchRecommend;
 import com.thr.taobaounion.model.domain.SearchResult;
 import com.thr.taobaounion.presenter.ISearchPresenter;
+import com.thr.taobaounion.utils.JsonCacheUtil;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.view.ISearchCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -18,18 +20,42 @@ public class SearchPresenterImpl implements ISearchPresenter {
 
     private int currentPage = 0;
 
+    private String mKeyWord;
+
+    private final String KEY_HISTORIES = "key_histories";
+
+    @Override
+    public void saveHistory(String data) {
+//        //如果已经存在，就干掉，再更新
+//        JsonCacheUtil jsonCacheUtil = JsonCacheUtil.getInstance();
+//        Histories data = jsonCacheUtil.getValue(KEY_HISTORIES, Histories.class);
+//        if (data != null && data.getHistories() != null) {
+//            List<String> historiesList = data.getHistories();
+//            if (historiesList.contains(history)) {
+//                historiesList.remove(history);
+//            }
+//        }//去重完成
+//
+//        //对个数限制
+    }
+
     @Override
     public void getHistories() {
-
+        List<String> temp = new ArrayList<>();
+        temp.add("aa");
+        temp.add("bb");
+        temp.add("cc");
+        mCallback.onHistoriesLoaded(temp);
     }
 
     @Override
     public void delHistories() {
-
+        //缓存中清除历史记录缓存
     }
 
     @Override
     public void doSearch(String keyWord) {
+        mKeyWord = keyWord;
         if (mCallback != null) {
             mCallback.onLoading();
         }
@@ -81,7 +107,45 @@ public class SearchPresenterImpl implements ISearchPresenter {
 
     @Override
     public void loadMore() {
+        currentPage++;
+        Call<SearchResult> task = api.getSearchResult(currentPage, mKeyWord);
+        task.enqueue(new Callback<SearchResult>() {
+            @Override
+            public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
+                int code = response.code();
+                LogUtils.d(this, "加载更多状态码 : " + code);
+                if (response.isSuccessful()) {
+                    onLoadedSuccess(response.body());
+                } else {
+                    onLoadedError();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<SearchResult> call, Throwable t) {
+                mCallback.onLoadMoreError();
+            }
+        });
+    }
+
+    private void onLoadedError() {
+        LogUtils.d(this, "加载更多失败");
+        currentPage--;
+        if (mCallback != null) {
+            mCallback.onLoadMoreError();
+        }
+    }
+
+    private void onLoadedSuccess(SearchResult body) {
+        LogUtils.d(this, "加载更多");
+        if (mCallback != null) {
+            int size = body.getList().size();
+            if (size == 0) {
+                mCallback.onEmpty();
+            } else {
+                mCallback.onSearchSuccess(body); //把数据传给ui层
+            }
+        }
     }
 
     @Override

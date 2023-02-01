@@ -5,6 +5,12 @@ import com.thr.taobaounion.view.ISearchCallback;
 
 public interface ISearchPresenter extends IBasePresenter<ISearchCallback> {
 
+
+    /**
+     * 保存历史记录
+     */
+    void saveHistory(String history);
+
     /**
      * 获取搜索历史
      */

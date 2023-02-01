@@ -18,6 +18,8 @@ public class SearchFragment extends BaseFragment implements ISearchCallback {
 
     private ISearchPresenter searchPresenter;
 
+    private String mKeyWord;
+
     @Override
     protected int getRootViewResId() {
         return R.layout.fragment_search;
@@ -33,7 +35,7 @@ public class SearchFragment extends BaseFragment implements ISearchCallback {
         searchPresenter = PresenterManager.getInstance().getSearchPresenter();
         searchPresenter.registerViewCallback(this);
         searchPresenter.getRecommendWords();
-        searchPresenter.doSearch("连衣裙");
+//        searchPresenter.doSearch("连衣裙");
     }
 
     @Override
@@ -45,11 +47,11 @@ public class SearchFragment extends BaseFragment implements ISearchCallback {
 
     @Override
     protected void onRetryClick() {
-//        searchPresenter.doSearch("连衣裙");
+        searchPresenter.doSearch(mKeyWord);
     }
 
     @Override
-    public void onHistoriesLoaded() {
+    public void onHistoriesLoaded(List<String> list) {
 
     }
 
@@ -88,17 +90,17 @@ public class SearchFragment extends BaseFragment implements ISearchCallback {
 
     @Override
     public void onLoadMoreLoaded() {
-
+        ToastUtils.show("加载了" + "xx"+"条数据");
     }
 
     @Override
     public void onLoadMoreError() {
-
+        ToastUtils.show("加载更多失败");
     }
 
     @Override
     public void onLoadMoreEmpty() {
-
+        ToastUtils.show("没有更多数据了");
     }
 
 
