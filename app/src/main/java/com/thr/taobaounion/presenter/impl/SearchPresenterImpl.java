@@ -34,7 +34,7 @@ public class SearchPresenterImpl implements ISearchPresenter {
         task.enqueue(new Callback<SearchResult>() {
             @Override
             public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
-                LogUtils.d(this, "搜索关键词返回码：" + response.code());
+                LogUtils.d(this, "搜索关键词返回码： " + response.code());
                 if (response.isSuccessful()) {
                     LogUtils.d(this, response.body().toString());
                     mCallback.onSearchSuccess(response.body());
