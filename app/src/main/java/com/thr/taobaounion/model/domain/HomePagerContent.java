@@ -49,7 +49,7 @@ public class HomePagerContent {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements IBaseInfo {
 
         private int category_id;
         private String click_url;
@@ -257,8 +257,18 @@ public class HomePagerContent {
             this.sub_title = sub_title;
         }
 
+        @Override
+        public String getCover() {
+            return pict_url;
+        }
+
         public String getTitle() {
             return title;
+        }
+
+        @Override
+        public String getUrl() {
+            return coupon_click_url==null ? click_url : coupon_click_url;
         }
 
         public void setTitle(String title) {

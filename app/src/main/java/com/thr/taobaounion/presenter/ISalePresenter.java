@@ -11,11 +11,6 @@ public interface ISalePresenter extends IBasePresenter<ISaleCallback> {
     void getOnSaleContent();
 
     /**
-     * 重新加载
-     */
-    void retry();
-
-    /**
      * 加载更多
      */
     void loaderMore();

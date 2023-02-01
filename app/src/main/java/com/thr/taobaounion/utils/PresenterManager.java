@@ -5,6 +5,7 @@ import com.thr.taobaounion.presenter.IHomePresenter;
 import com.thr.taobaounion.presenter.ITicketPresenter;
 import com.thr.taobaounion.presenter.impl.CategoryPagerPresenterImpl;
 import com.thr.taobaounion.presenter.impl.HomePresenterImpl;
+import com.thr.taobaounion.presenter.impl.SalePresenterImpl;
 import com.thr.taobaounion.presenter.impl.TicketPresenterImpl;
 
 public class PresenterManager {
@@ -13,11 +14,13 @@ public class PresenterManager {
     private final ICategoryPagerPresenter categoryPagerPresenter;
     private final IHomePresenter homePresenter;
     private final ITicketPresenter ticketPresenter;
+    private final SalePresenterImpl salePresenter;
 
     private PresenterManager() {
         categoryPagerPresenter = new CategoryPagerPresenterImpl();
         homePresenter = new HomePresenterImpl();
         ticketPresenter = new TicketPresenterImpl();
+        salePresenter = new SalePresenterImpl();
     }
 
     public static PresenterManager getInstance() { //PresenterManager单例
@@ -34,5 +37,9 @@ public class PresenterManager {
 
     public ITicketPresenter getTicketPresenter() {
         return ticketPresenter;
+    }
+
+    public SalePresenterImpl getSalePresenter() {
+        return salePresenter;
     }
 }

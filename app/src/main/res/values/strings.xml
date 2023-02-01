@@ -11,4 +11,5 @@
     <string name="text_tao_kou_ling">淘口令</string>
     <string name="text_loading">加载中..</string>
     <string name="text_load_img_error">加载图片失败</string>
+    <string name="text_sale_title">特惠宝贝</string>
 </resources>

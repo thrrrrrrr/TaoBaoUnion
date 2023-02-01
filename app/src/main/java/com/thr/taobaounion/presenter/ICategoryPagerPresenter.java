@@ -13,6 +13,4 @@ public interface ICategoryPagerPresenter extends IBasePresenter<ICategoryPageCal
     void getContentByCategoryId(int categoryId);
 
     void loaderMore(int categoryId);
-
-    void reload(int categoryId);
 }

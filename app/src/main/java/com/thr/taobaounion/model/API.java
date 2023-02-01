@@ -3,6 +3,8 @@ package com.thr.taobaounion.model;
 import com.thr.taobaounion.model.domain.Categories;
 import com.thr.taobaounion.model.domain.HomePagerContent;
 import com.thr.taobaounion.model.domain.SaleContent;
+import com.thr.taobaounion.model.domain.SearchRecommend;
+import com.thr.taobaounion.model.domain.SearchResult;
 import com.thr.taobaounion.model.domain.TicketParams;
 import com.thr.taobaounion.model.domain.TicketResult;
 
@@ -27,5 +29,11 @@ public interface API {
     Call<TicketResult> getTicket(@Body TicketParams ticketParams);
 
     @GET("onSell/{page}")
-    Call<SaleContent> getSaleContent(@Query("page") int page);
+    Call<SaleContent> getSaleContent(@Path("page") int page);
+
+    @GET("search/recommend")
+    Call<SearchRecommend> getSearchRecommend();
+
+    @GET("search")
+    Call<SearchResult> getSearchResult(@Query("page") int page, @Query("keyword") String keyWord);
 }

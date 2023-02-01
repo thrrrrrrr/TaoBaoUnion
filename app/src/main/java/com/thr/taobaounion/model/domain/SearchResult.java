@@ -1,22 +1,15 @@
 package com.thr.taobaounion.model.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SaleContent {
+public class SearchResult {
 
     private boolean success;
     private int code;
     private String message;
     private DataBean data;
 
-    public List<DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean> getList() {
-        try {
-            return getData().getTbk_dg_optimus_material_response().getResult_list().getMap_data();
-        }catch (Exception e) {
-            return new ArrayList<>();
-        }
-    }
+
 
     public boolean isSuccess() {
         return success;
@@ -51,29 +44,22 @@ public class SaleContent {
     }
 
     public static class DataBean {
-        private TbkDgOptimusMaterialResponseBean tbk_dg_optimus_material_response;
 
-        public TbkDgOptimusMaterialResponseBean getTbk_dg_optimus_material_response() {
-            return tbk_dg_optimus_material_response;
+        private TbkDgMaterialOptionalResponseBean tbk_dg_material_optional_response;
+
+        public TbkDgMaterialOptionalResponseBean getTbk_dg_material_optional_response() {
+            return tbk_dg_material_optional_response;
         }
 
-        public void setTbk_dg_optimus_material_response(TbkDgOptimusMaterialResponseBean tbk_dg_optimus_material_response) {
-            this.tbk_dg_optimus_material_response = tbk_dg_optimus_material_response;
+        public void setTbk_dg_material_optional_response(TbkDgMaterialOptionalResponseBean tbk_dg_material_optional_response) {
+            this.tbk_dg_material_optional_response = tbk_dg_material_optional_response;
         }
 
-        public static class TbkDgOptimusMaterialResponseBean {
+        public static class TbkDgMaterialOptionalResponseBean {
 
-            private String is_default;
             private ResultListBean result_list;
+            private int total_results;
             private String request_id;
-
-            public String getIs_default() {
-                return is_default;
-            }
-
-            public void setIs_default(String is_default) {
-                this.is_default = is_default;
-            }
 
             public ResultListBean getResult_list() {
                 return result_list;
@@ -81,6 +67,14 @@ public class SaleContent {
 
             public void setResult_list(ResultListBean result_list) {
                 this.result_list = result_list;
+            }
+
+            public int getTotal_results() {
+                return total_results;
+            }
+
+            public void setTotal_results(int total_results) {
+                this.total_results = total_results;
             }
 
             public String getRequest_id() {
@@ -102,39 +96,61 @@ public class SaleContent {
                     this.map_data = map_data;
                 }
 
-                public static class MapDataBean implements IBaseInfo{
+                public static class MapDataBean {
+
                     private int category_id;
-                    private String click_url;
+                    private String category_name;
                     private String commission_rate;
-                    private int coupon_amount;
-                    private String coupon_click_url;
+                    private String commission_type;
+                    private String coupon_amount;
                     private String coupon_end_time;
+                    private String coupon_id;
+                    private String coupon_info;
                     private int coupon_remain_count;
                     private String coupon_share_url;
                     private String coupon_start_fee;
                     private String coupon_start_time;
                     private int coupon_total_count;
+                    private String include_dxjh;
+                    private String include_mkt;
+                    private String info_dxjh;
                     private String item_description;
                     private String item_id;
+                    private String item_url;
                     private int level_one_category_id;
                     private String level_one_category_name;
+                    private String nick;
+                    private String num_iid;
                     private String pict_url;
+                    private String presale_deposit;
+                    private int presale_end_time;
+                    private int presale_start_time;
+                    private int presale_tail_end_time;
+                    private int presale_tail_start_time;
+                    private String provcity;
+                    private String real_post_fee;
                     private String reserve_price;
                     private long seller_id;
+                    private int shop_dsr;
+                    private String shop_title;
                     private String short_title;
                     private SmallImagesBean small_images;
-                    private String sub_title;
+                    private String superior_brand;
                     private String title;
-                    private int tmall_play_activity_end_time;
-                    private int tmall_play_activity_start_time;
+                    private String tk_total_commi;
+                    private String tk_total_sales;
+                    private String url;
                     private int user_type;
                     private int volume;
-                    private Float zk_final_price;
+                    private String white_image;
+                    private String x_id;
+                    private String zk_final_price;
 
                     @Override
                     public String toString() {
-                        return ", title='" + title + '\'' +
-                                ", pict_url='" + pict_url + '\'';
+                        return "MapDataBean{" +
+                                "title='" + title + '\'' +
+                                '}';
                     }
 
                     public int getCategory_id() {
@@ -145,12 +161,12 @@ public class SaleContent {
                         this.category_id = category_id;
                     }
 
-                    public String getClick_url() {
-                        return click_url;
+                    public String getCategory_name() {
+                        return category_name;
                     }
 
-                    public void setClick_url(String click_url) {
-                        this.click_url = click_url;
+                    public void setCategory_name(String category_name) {
+                        this.category_name = category_name;
                     }
 
                     public String getCommission_rate() {
@@ -161,20 +177,20 @@ public class SaleContent {
                         this.commission_rate = commission_rate;
                     }
 
-                    public int getCoupon_amount() {
+                    public String getCommission_type() {
+                        return commission_type;
+                    }
+
+                    public void setCommission_type(String commission_type) {
+                        this.commission_type = commission_type;
+                    }
+
+                    public String getCoupon_amount() {
                         return coupon_amount;
                     }
 
-                    public void setCoupon_amount(int coupon_amount) {
+                    public void setCoupon_amount(String coupon_amount) {
                         this.coupon_amount = coupon_amount;
-                    }
-
-                    public String getCoupon_click_url() {
-                        return coupon_click_url;
-                    }
-
-                    public void setCoupon_click_url(String coupon_click_url) {
-                        this.coupon_click_url = coupon_click_url;
                     }
 
                     public String getCoupon_end_time() {
@@ -183,6 +199,22 @@ public class SaleContent {
 
                     public void setCoupon_end_time(String coupon_end_time) {
                         this.coupon_end_time = coupon_end_time;
+                    }
+
+                    public String getCoupon_id() {
+                        return coupon_id;
+                    }
+
+                    public void setCoupon_id(String coupon_id) {
+                        this.coupon_id = coupon_id;
+                    }
+
+                    public String getCoupon_info() {
+                        return coupon_info;
+                    }
+
+                    public void setCoupon_info(String coupon_info) {
+                        this.coupon_info = coupon_info;
                     }
 
                     public int getCoupon_remain_count() {
@@ -225,6 +257,30 @@ public class SaleContent {
                         this.coupon_total_count = coupon_total_count;
                     }
 
+                    public String getInclude_dxjh() {
+                        return include_dxjh;
+                    }
+
+                    public void setInclude_dxjh(String include_dxjh) {
+                        this.include_dxjh = include_dxjh;
+                    }
+
+                    public String getInclude_mkt() {
+                        return include_mkt;
+                    }
+
+                    public void setInclude_mkt(String include_mkt) {
+                        this.include_mkt = include_mkt;
+                    }
+
+                    public String getInfo_dxjh() {
+                        return info_dxjh;
+                    }
+
+                    public void setInfo_dxjh(String info_dxjh) {
+                        this.info_dxjh = info_dxjh;
+                    }
+
                     public String getItem_description() {
                         return item_description;
                     }
@@ -239,6 +295,14 @@ public class SaleContent {
 
                     public void setItem_id(String item_id) {
                         this.item_id = item_id;
+                    }
+
+                    public String getItem_url() {
+                        return item_url;
+                    }
+
+                    public void setItem_url(String item_url) {
+                        this.item_url = item_url;
                     }
 
                     public int getLevel_one_category_id() {
@@ -257,12 +321,84 @@ public class SaleContent {
                         this.level_one_category_name = level_one_category_name;
                     }
 
+                    public String getNick() {
+                        return nick;
+                    }
+
+                    public void setNick(String nick) {
+                        this.nick = nick;
+                    }
+
+                    public String getNum_iid() {
+                        return num_iid;
+                    }
+
+                    public void setNum_iid(String num_iid) {
+                        this.num_iid = num_iid;
+                    }
+
                     public String getPict_url() {
                         return pict_url;
                     }
 
                     public void setPict_url(String pict_url) {
                         this.pict_url = pict_url;
+                    }
+
+                    public String getPresale_deposit() {
+                        return presale_deposit;
+                    }
+
+                    public void setPresale_deposit(String presale_deposit) {
+                        this.presale_deposit = presale_deposit;
+                    }
+
+                    public int getPresale_end_time() {
+                        return presale_end_time;
+                    }
+
+                    public void setPresale_end_time(int presale_end_time) {
+                        this.presale_end_time = presale_end_time;
+                    }
+
+                    public int getPresale_start_time() {
+                        return presale_start_time;
+                    }
+
+                    public void setPresale_start_time(int presale_start_time) {
+                        this.presale_start_time = presale_start_time;
+                    }
+
+                    public int getPresale_tail_end_time() {
+                        return presale_tail_end_time;
+                    }
+
+                    public void setPresale_tail_end_time(int presale_tail_end_time) {
+                        this.presale_tail_end_time = presale_tail_end_time;
+                    }
+
+                    public int getPresale_tail_start_time() {
+                        return presale_tail_start_time;
+                    }
+
+                    public void setPresale_tail_start_time(int presale_tail_start_time) {
+                        this.presale_tail_start_time = presale_tail_start_time;
+                    }
+
+                    public String getProvcity() {
+                        return provcity;
+                    }
+
+                    public void setProvcity(String provcity) {
+                        this.provcity = provcity;
+                    }
+
+                    public String getReal_post_fee() {
+                        return real_post_fee;
+                    }
+
+                    public void setReal_post_fee(String real_post_fee) {
+                        this.real_post_fee = real_post_fee;
                     }
 
                     public String getReserve_price() {
@@ -281,6 +417,22 @@ public class SaleContent {
                         this.seller_id = seller_id;
                     }
 
+                    public int getShop_dsr() {
+                        return shop_dsr;
+                    }
+
+                    public void setShop_dsr(int shop_dsr) {
+                        this.shop_dsr = shop_dsr;
+                    }
+
+                    public String getShop_title() {
+                        return shop_title;
+                    }
+
+                    public void setShop_title(String shop_title) {
+                        this.shop_title = shop_title;
+                    }
+
                     public String getShort_title() {
                         return short_title;
                     }
@@ -297,46 +449,44 @@ public class SaleContent {
                         this.small_images = small_images;
                     }
 
-                    public String getSub_title() {
-                        return sub_title;
+                    public String getSuperior_brand() {
+                        return superior_brand;
                     }
 
-                    public void setSub_title(String sub_title) {
-                        this.sub_title = sub_title;
-                    }
-
-                    @Override
-                    public String getCover() {
-                        return pict_url;
+                    public void setSuperior_brand(String superior_brand) {
+                        this.superior_brand = superior_brand;
                     }
 
                     public String getTitle() {
                         return title;
                     }
 
-                    @Override
-                    public String getUrl() {
-                        return coupon_click_url==null ? click_url : coupon_click_url;
-                    }
-
                     public void setTitle(String title) {
                         this.title = title;
                     }
 
-                    public int getTmall_play_activity_end_time() {
-                        return tmall_play_activity_end_time;
+                    public String getTk_total_commi() {
+                        return tk_total_commi;
                     }
 
-                    public void setTmall_play_activity_end_time(int tmall_play_activity_end_time) {
-                        this.tmall_play_activity_end_time = tmall_play_activity_end_time;
+                    public void setTk_total_commi(String tk_total_commi) {
+                        this.tk_total_commi = tk_total_commi;
                     }
 
-                    public int getTmall_play_activity_start_time() {
-                        return tmall_play_activity_start_time;
+                    public String getTk_total_sales() {
+                        return tk_total_sales;
                     }
 
-                    public void setTmall_play_activity_start_time(int tmall_play_activity_start_time) {
-                        this.tmall_play_activity_start_time = tmall_play_activity_start_time;
+                    public void setTk_total_sales(String tk_total_sales) {
+                        this.tk_total_sales = tk_total_sales;
+                    }
+
+                    public String getUrl() {
+                        return url;
+                    }
+
+                    public void setUrl(String url) {
+                        this.url = url;
                     }
 
                     public int getUser_type() {
@@ -355,11 +505,27 @@ public class SaleContent {
                         this.volume = volume;
                     }
 
-                    public Float getZk_final_price() {
+                    public String getWhite_image() {
+                        return white_image;
+                    }
+
+                    public void setWhite_image(String white_image) {
+                        this.white_image = white_image;
+                    }
+
+                    public String getX_id() {
+                        return x_id;
+                    }
+
+                    public void setX_id(String x_id) {
+                        this.x_id = x_id;
+                    }
+
+                    public String getZk_final_price() {
                         return zk_final_price;
                     }
 
-                    public void setZk_final_price(Float zk_final_price) {
+                    public void setZk_final_price(String zk_final_price) {
                         this.zk_final_price = zk_final_price;
                     }
 

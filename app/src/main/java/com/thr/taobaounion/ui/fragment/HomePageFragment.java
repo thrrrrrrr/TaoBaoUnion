@@ -33,6 +33,7 @@ import com.thr.taobaounion.utils.Constants;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.PresenterManager;
 import com.thr.taobaounion.utils.SizeUtils;
+import com.thr.taobaounion.utils.TicketUtil;
 import com.thr.taobaounion.utils.ToastUtils;
 import com.thr.taobaounion.view.ICategoryPageCallback;
 
@@ -234,6 +235,11 @@ public class HomePageFragment extends BaseFragment implements ICategoryPageCallb
         }
     }
 
+    @Override
+    protected void onRetryClick() {
+        categoryPagerPresenter.getContentByCategoryId(materialId);
+    }
+
     public int getCategoryId() {
         return materialId;
     }
@@ -314,25 +320,26 @@ public class HomePageFragment extends BaseFragment implements ICategoryPageCallb
     public void onItemClick(HomePagerContent.DataBean item) {
         //列表被点击
 //        LogUtils.d(this, item.getTitle());
-        handleItemClick(item);
+        TicketUtil.toTicketPage(getContext(), item);
     }
 
     @Override
     public void onLooperItemClick(HomePagerContent.DataBean item) {
 //        LogUtils.d(this, item.getTitle());
-        handleItemClick(item);
+        TicketUtil.toTicketPage(getContext(), item);
     }
 
-    private void handleItemClick(HomePagerContent.DataBean item) {
-        String title = item.getTitle();
-        String url = item.getCoupon_click_url(); //领券界面
-        if (TextUtils.isEmpty(url)) {
-            url = item.getClick_url(); //详情界面
-        }
-        String cover = item.getPict_url();
-        //拿到ticketPresenter去加载
-        ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
-        ticketPresenter.getTicket(title, url, cover);//可能会产生网络请求比活动初始化presenter块的情况，得多写代码
-        startActivity(new Intent(getContext(), TicketActivity.class));
-    }
+//    private void handleItemClick(HomePagerContent.DataBean item) {
+//        String title = item.getTitle();
+//        String url = item.getCoupon_click_url(); //领券界面
+//        if (TextUtils.isEmpty(url)) {
+//            url = item.getClick_url(); //详情界面
+//        }
+//        String cover = item.getPict_url();
+//        //拿到ticketPresenter去加载
+//        ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
+//        ticketPresenter.getTicket(title, url, cover);//可能会产生网络请求比活动初始化presenter块的情况，得多写代码
+//        startActivity(new Intent(getContext(), TicketActivity.class));
+//
+//    }
 }

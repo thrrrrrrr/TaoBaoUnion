@@ -31,8 +31,8 @@ public class SalePresenterImpl implements ISalePresenter {
                 isLoading = false;
                 int code = response.code();
                 if (response.isSuccessful()) {
-                    LogUtils.d(this, response.body().getList().toString());
-                    LogUtils.d(this, response.body().getList().get(0).toString());
+//                    LogUtils.d(this, response.body().getList().toString());
+//                    LogUtils.d(this, response.body().getList().get(0).toString());
                     SaleContent saleContent = response.body();
                     onSuccess(saleContent);
                 } else {
@@ -49,14 +49,16 @@ public class SalePresenterImpl implements ISalePresenter {
     }
 
     private void onError() {
+        LogUtils.d(this, "加载失败");
         if (mCallback != null) {
             mCallback.onNetworkError();
         }
     }
 
     private void onSuccess(SaleContent saleContent) {
+        LogUtils.d(this, "加载成功");
         if (mCallback != null) {
-            int size = saleContent.getList().size();
+            int size = saleContent.getList().size(); //getList出错就返回空列表，判空
             if (size == 0) {
                 onEmpty();
             } else {
@@ -66,14 +68,10 @@ public class SalePresenterImpl implements ISalePresenter {
     }
 
     private void onEmpty() {
+        LogUtils.d(this, "加载为空");
         if (mCallback != null) {
             mCallback.onEmpty();
         }
-    }
-
-    @Override
-    public void retry() {
-        this.getOnSaleContent();
     }
 
     /**
@@ -95,7 +93,6 @@ public class SalePresenterImpl implements ISalePresenter {
                 int code = response.code();
                 if (response.isSuccessful()) {
                     LogUtils.d(this, response.body().getList().toString());
-                    LogUtils.d(this, response.body().getList().get(0).toString());
                     SaleContent saleContent = response.body();
                     onLoadSuccess(saleContent);
                 } else {
@@ -113,11 +110,13 @@ public class SalePresenterImpl implements ISalePresenter {
     }
 
     private void onLoadError() {
+        LogUtils.d(this, "加载更多失败");
         currentPage--;
         mCallback.onMoreLoadedError();
     }
 
     private void onLoadSuccess(SaleContent saleContent) {
+        LogUtils.d(this, "加载更多");
         if (mCallback != null) {
             int size = saleContent.getList().size();
             if (size == 0) {
