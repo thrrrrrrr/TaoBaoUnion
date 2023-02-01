@@ -5,7 +5,7 @@ import com.thr.taobaounion.model.domain.HomePagerContent;
 
 import java.util.List;
 
-public interface ICategoryPagerCallback extends IBaseCallback {
+public interface ICategoryPageCallback extends IBaseCallback {
 
     int getCategoryId();
 

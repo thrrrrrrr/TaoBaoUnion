@@ -7,9 +7,10 @@
 
     <ImageView
         android:id="@+id/goods_cover"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:padding="2dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:padding="4dp"
+        android:layout_marginLeft="5dp"
         android:src="@color/colorPrimary" />
 
     <LinearLayout
@@ -37,6 +38,7 @@
             android:textColor="@color/white"
             android:textSize="12sp" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,17 +64,19 @@
                 android:layout_marginLeft="3dp"
                 android:id="@+id/goods_original_price"
                 android:text="￥23"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:textColor="@color/grey" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2222人已购买"
+                android:textSize="14sp"
                 android:id="@+id/goods_sell_count"
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="20dp"
                 android:textColor="@color/grey" />
         </LinearLayout>
+
 
 
     </LinearLayout>

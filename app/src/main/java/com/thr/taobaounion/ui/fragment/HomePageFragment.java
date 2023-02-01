@@ -3,6 +3,7 @@ package com.thr.taobaounion.ui.fragment;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -33,13 +34,13 @@ import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.PresenterManager;
 import com.thr.taobaounion.utils.SizeUtils;
 import com.thr.taobaounion.utils.ToastUtils;
-import com.thr.taobaounion.view.ICategoryPagerCallback;
+import com.thr.taobaounion.view.ICategoryPageCallback;
 
 import java.util.List;
 
 import butterknife.BindView;
 
-public class HomePageFragment extends BaseFragment implements ICategoryPagerCallback, HomePagerContentAdapter.OnListItemClickListener, LooperPagerAdapter.OnLooperPageItemClickListener {
+public class HomePageFragment extends BaseFragment implements ICategoryPageCallback, HomePagerContentAdapter.OnListItemClickListener, LooperPagerAdapter.OnLooperPageItemClickListener {
 
     private ICategoryPagerPresenter categoryPagerPresenter;
     private int materialId;
@@ -308,6 +309,7 @@ public class HomePageFragment extends BaseFragment implements ICategoryPagerCall
         }
     }
 
+    //实现的适配器里内部的监听器接口方法
     @Override
     public void onItemClick(HomePagerContent.DataBean item) {
         //列表被点击
@@ -323,7 +325,10 @@ public class HomePageFragment extends BaseFragment implements ICategoryPagerCall
 
     private void handleItemClick(HomePagerContent.DataBean item) {
         String title = item.getTitle();
-        String url = item.getClick_url(); //跳转的连接
+        String url = item.getCoupon_click_url(); //领券界面
+        if (TextUtils.isEmpty(url)) {
+            url = item.getClick_url(); //详情界面
+        }
         String cover = item.getPict_url();
         //拿到ticketPresenter去加载
         ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();

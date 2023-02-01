@@ -22,12 +22,12 @@ import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.PresenterManager;
 import com.thr.taobaounion.utils.ToastUtils;
 import com.thr.taobaounion.utils.UrlUtils;
-import com.thr.taobaounion.view.ITicketPagerCallback;
+import com.thr.taobaounion.view.ITicketCallback;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class TicketActivity extends BaseAvtivity implements ITicketPagerCallback {
+public class TicketActivity extends BaseAvtivity implements ITicketCallback {
 
     private ITicketPresenter ticketPresenter;
 

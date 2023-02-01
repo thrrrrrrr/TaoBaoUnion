@@ -4,8 +4,7 @@ import com.thr.taobaounion.model.domain.TicketParams;
 import com.thr.taobaounion.model.domain.TicketResult;
 import com.thr.taobaounion.presenter.ITicketPresenter;
 import com.thr.taobaounion.utils.LogUtils;
-import com.thr.taobaounion.utils.UrlUtils;
-import com.thr.taobaounion.view.ITicketPagerCallback;
+import com.thr.taobaounion.view.ITicketCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,7 +12,7 @@ import retrofit2.Response;
 
 public class TicketPresenterImpl implements ITicketPresenter {
 
-    private ITicketPagerCallback mCallback;
+    private ITicketCallback mCallback;
 
     private State currentState = State.NONE;
 
@@ -26,11 +25,11 @@ public class TicketPresenterImpl implements ITicketPresenter {
 
     @Override
     public void getTicket(String title, String url, String cover) {
-//        LogUtils.d(this, " "  + UrlUtils.getCoverPath(url));
+        LogUtils.d(this, "淘口令生成： "  + url);
         onTicktLoadind();
         //请求网络 获取淘口令
         this.cover = cover;
-        TicketParams ticketParams = new TicketParams(UrlUtils.getCoverPath(url), title);
+        TicketParams ticketParams = new TicketParams(url, title);
         Call<TicketResult> task = api.getTicket(ticketParams);
         task.enqueue(new Callback<TicketResult>() {
             @Override
@@ -81,7 +80,7 @@ public class TicketPresenterImpl implements ITicketPresenter {
     }
 
     @Override
-    public void registerViewCallback(ITicketPagerCallback callback) {
+    public void registerViewCallback(ITicketCallback callback) {
         if (currentState != State.NONE) {
             //说明确实，网络请求在活动初始化之前完成了，此时回头望一下状态记录
             if (currentState == State.SUCCESS) {
@@ -96,7 +95,7 @@ public class TicketPresenterImpl implements ITicketPresenter {
     }
 
     @Override
-    public void unregisterViewCallback(ITicketPagerCallback callback) {
+    public void unregisterViewCallback(ITicketCallback callback) {
         mCallback = null;
     }
 

@@ -1,11 +1,9 @@
 package com.thr.taobaounion.presenter.impl;
 
-import com.thr.taobaounion.model.API;
 import com.thr.taobaounion.model.domain.HomePagerContent;
 import com.thr.taobaounion.presenter.ICategoryPagerPresenter;
 import com.thr.taobaounion.utils.LogUtils;
-import com.thr.taobaounion.utils.RetrofitManager;
-import com.thr.taobaounion.view.ICategoryPagerCallback;
+import com.thr.taobaounion.view.ICategoryPageCallback;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -16,7 +14,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
 
@@ -38,7 +35,7 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
 
     @Override
     public void getContentByCategoryId(int categoryId) {
-        for (ICategoryPagerCallback callback : callbacks) {
+        for (ICategoryPageCallback callback : callbacks) {
             if (callback.getCategoryId() == categoryId) {
                 callback.onLoading();
             }
@@ -83,7 +80,7 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
     }
 
     private void handleNetworkError(int categoryId) {
-        for (ICategoryPagerCallback callback : callbacks) {
+        for (ICategoryPageCallback callback : callbacks) {
             if (categoryId == callback.getCategoryId()) {
                 callback.onNetworkError();
             }
@@ -93,7 +90,7 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
     private void handleHomePagerContentResult(HomePagerContent pageContent, int categoryId) {
         //通知ui曾更新数据
         List<HomePagerContent.DataBean> data = pageContent.getData();
-        for (ICategoryPagerCallback callback : callbacks) {
+        for (ICategoryPageCallback callback : callbacks) {
             if (callback.getCategoryId() == categoryId) {
                 if (pageContent == null | pageContent.getData().size() == 0) {
                     callback.onEmpty();
@@ -143,7 +140,7 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
     }
 
     private void handleResoutLoadMore(HomePagerContent result, int categoryId) {
-        for (ICategoryPagerCallback callback : callbacks) {
+        for (ICategoryPageCallback callback : callbacks) {
             if (callback.getCategoryId() == categoryId) {
                 if (result==null || result.getData().size()==0) {
                     callback.onLoaderMoreEmpty();
@@ -158,7 +155,7 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
         //页码减
         currentPage--;
         pagesInfo.put(categoryId, currentPage);
-        for (ICategoryPagerCallback callback : callbacks) {
+        for (ICategoryPageCallback callback : callbacks) {
             if (callback.getCategoryId() == categoryId) {
                 callback.onLoaderMoreError();
             }
@@ -170,17 +167,17 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
 
     }
 
-    private List<ICategoryPagerCallback> callbacks = new ArrayList<>();
+    private List<ICategoryPageCallback> callbacks = new ArrayList<>();
 
     @Override
-    public void registerViewCallback(ICategoryPagerCallback callback) {
+    public void registerViewCallback(ICategoryPageCallback callback) {
         if (!callbacks.contains(callback)) {
             callbacks.add(callback);
         }
     }
 
     @Override
-    public void unregisterViewCallback(ICategoryPagerCallback callback) {
+    public void unregisterViewCallback(ICategoryPageCallback callback) {
         callbacks.remove(callback);
     }
 }

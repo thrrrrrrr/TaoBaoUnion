@@ -42,7 +42,7 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
         HomePagerContent.DataBean dataBean = data.get(position);
         //设置数据
         LogUtils.d(this, "position: " + position);
-        holder.setData(dataBean);
+        holder.setData(dataBean);//设置数据
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +53,8 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
         });
     }
 
-    //设置监听器??????
+    //设置监听器??????监听器就是Fragment！！！！Fragment实现了监听器接口，在初始
+    //化时给Adapter绑定监听器（this），holder被点击时，调用Fragment里的OnClick方法
     public void setOnListItemClickListener(OnListItemClickListener listener) {
         this.mItemClickListener = listener;
     }
@@ -111,7 +112,7 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
             //
             ViewGroup.LayoutParams layoutParams = cover.getLayoutParams();
             int size = layoutParams.width;
-            size = size/100*100 + 100;
+            size = (size-1)/100*100 + 100;
             String url = UrlUtils.getCoverPath(dataBean.getPict_url(), size);
             Glide.with(itemView.getContext()).load(url).into(cover);
             //
