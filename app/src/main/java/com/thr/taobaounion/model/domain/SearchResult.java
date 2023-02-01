@@ -1,5 +1,6 @@
 package com.thr.taobaounion.model.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResult {
@@ -9,7 +10,20 @@ public class SearchResult {
     private String message;
     private DataBean data;
 
+    public List<DataBean.TbkDgMaterialOptionalResponseBean.ResultListBean.MapDataBean> getList() {
+        try {
+            return getData().getTbk_dg_material_optional_response().getResult_list().getMap_data();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
 
+    @Override
+    public String toString() {
+        return "SearchResult{" +
+                ", data=" + data +
+                '}';
+    }
 
     public boolean isSuccess() {
         return success;
@@ -47,6 +61,13 @@ public class SearchResult {
 
         private TbkDgMaterialOptionalResponseBean tbk_dg_material_optional_response;
 
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "tbk_dg_material_optional_response=" + tbk_dg_material_optional_response +
+                    '}';
+        }
+
         public TbkDgMaterialOptionalResponseBean getTbk_dg_material_optional_response() {
             return tbk_dg_material_optional_response;
         }
@@ -60,6 +81,15 @@ public class SearchResult {
             private ResultListBean result_list;
             private int total_results;
             private String request_id;
+
+            @Override
+            public String toString() {
+                return "TbkDgMaterialOptionalResponseBean{" +
+                        "result_list=" + result_list +
+                        ", total_results=" + total_results +
+                        ", request_id='" + request_id + '\'' +
+                        '}';
+            }
 
             public ResultListBean getResult_list() {
                 return result_list;
@@ -87,6 +117,13 @@ public class SearchResult {
 
             public static class ResultListBean {
                 private List<MapDataBean> map_data;
+
+                @Override
+                public String toString() {
+                    return "ResultListBean{" +
+                            "map_data=" + map_data +
+                            '}';
+                }
 
                 public List<MapDataBean> getMap_data() {
                     return map_data;

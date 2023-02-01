@@ -38,15 +38,37 @@ public abstract class BaseFragment extends Fragment {
     private Unbinder bind;
     private FrameLayout baseContainer;
 
+    protected abstract int getRootViewResId();
+
+    protected void onRetryClick() {
+        //子类实现重新加载的逻辑
+    }
+
+    protected void initView(View view) {
+        //初始化控件，子类覆盖
+    }
+
+    protected void release() {
+        //释放资源
+    }
+
+    protected void initPresenter() {
+        //创建presenter
+    }
+
+    protected void initListener() {
+        //创建监听器
+    }
+
+    protected void loadData() {
+        //加载数据
+    }
+
     @OnClick(R.id.network_error_tips)
     public void retry() {
         //点击了重新加载
         LogUtils.d(this, "重新加载");
         onRetryClick();
-    }
-
-    protected void onRetryClick() {
-        //子类实现重新加载的逻辑
     }
 
     @SuppressLint("MissingInflatedId")
@@ -127,9 +149,7 @@ public abstract class BaseFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_empty, container, false);
     }
 
-    protected void initView(View view) {
-        //初始化控件，子类覆盖
-    }
+
 
     @Override
     public void onDestroyView() {
@@ -139,23 +159,5 @@ public abstract class BaseFragment extends Fragment {
         }
         release();
     }
-
-    protected void release() {
-        //释放资源
-    }
-
-    protected void initPresenter() {
-        //创建presenter
-    }
-
-    protected void initListener() {
-        //创建监听器
-    }
-
-    protected void loadData() {
-        //加载数据
-    }
-
-    protected abstract int getRootViewResId();
 
 }

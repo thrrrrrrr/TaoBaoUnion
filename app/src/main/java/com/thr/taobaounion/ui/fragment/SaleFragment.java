@@ -16,6 +16,7 @@ import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.thr.taobaounion.R;
 import com.thr.taobaounion.base.BaseFragment;
 import com.thr.taobaounion.model.domain.SaleContent;
+import com.thr.taobaounion.presenter.ISalePresenter;
 import com.thr.taobaounion.presenter.ITicketPresenter;
 import com.thr.taobaounion.presenter.impl.SalePresenterImpl;
 import com.thr.taobaounion.ui.activity.TicketActivity;
@@ -31,7 +32,7 @@ import butterknife.BindView;
 
 public class SaleFragment extends BaseFragment implements ISaleCallback, SalePageContentAdapter.SalePageItemClickListener {
 
-    private SalePresenterImpl salePresenter;
+    private ISalePresenter salePresenter;
 
     @BindView(R.id.sale_content_list)
     public RecyclerView saleContentList;
