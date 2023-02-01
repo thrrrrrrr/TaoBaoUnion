@@ -1,7 +1,9 @@
 package com.thr.taobaounion.ui.fragment;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.thr.taobaounion.R;
 import com.thr.taobaounion.base.BaseFragment;
@@ -21,6 +23,11 @@ public class SearchFragment extends BaseFragment implements ISearchCallback {
     private String mKeyWord;
 
     @Override
+    protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.fragment_search_layout, container, false);
+    }
+
+    @Override
     protected int getRootViewResId() {
         return R.layout.fragment_search;
     }
@@ -34,8 +41,9 @@ public class SearchFragment extends BaseFragment implements ISearchCallback {
     protected void initPresenter() {
         searchPresenter = PresenterManager.getInstance().getSearchPresenter();
         searchPresenter.registerViewCallback(this);
+        //获取推荐词
         searchPresenter.getRecommendWords();
-//        searchPresenter.doSearch("连衣裙");
+        searchPresenter.doSearch("连衣裙");
     }
 
     @Override

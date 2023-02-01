@@ -5,4 +5,9 @@
         <item name="colorPrimary">@color/white</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
+
+    <declare-styleable name="TextFlowLayout" >
+        <attr name="mItemHorizontalSpace" format="dimension" />
+        <attr name="mItemVerticalSpace" format="dimension" />
+    </declare-styleable>
 </resources>

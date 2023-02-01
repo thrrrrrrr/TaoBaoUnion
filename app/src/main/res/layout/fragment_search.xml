@@ -2,12 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:thr="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+<!--    历史记录-->
+
+<!--    推荐关键字-->
+    <com.thr.taobaounion.ui.custom.TextFlowLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="搜索"
-        android:textSize="164dp"/>
+        thr:mItemVerticalSpace = "20px"
+        thr:mItemHorizontalSpace = "20px" />
+
+<!--    搜索结果-->
 
 </LinearLayout>
