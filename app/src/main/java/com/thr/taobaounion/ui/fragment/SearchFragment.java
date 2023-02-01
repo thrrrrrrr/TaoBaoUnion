@@ -1,14 +1,19 @@
 package com.thr.taobaounion.ui.fragment;
 
+import android.annotation.SuppressLint;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.thr.taobaounion.R;
 import com.thr.taobaounion.base.BaseFragment;
 import com.thr.taobaounion.model.domain.SearchResult;
 import com.thr.taobaounion.presenter.ISearchPresenter;
+import com.thr.taobaounion.ui.custom.TextFlowLayout;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.PresenterManager;
 import com.thr.taobaounion.utils.ToastUtils;
@@ -16,11 +21,32 @@ import com.thr.taobaounion.view.ISearchCallback;
 
 import java.util.List;
 
-public class SearchFragment extends BaseFragment implements ISearchCallback {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class SearchFragment extends BaseFragment implements ISearchCallback, TextFlowLayout.OnFlowTextItemClickListener {
 
     private ISearchPresenter searchPresenter;
 
     private String mKeyWord;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.search_flow_text_layout)
+    public TextFlowLayout textFlowLayout;
+
+    @BindView(R.id.search_edit_view)
+    public EditText searchEditView;
+
+    @BindView(R.id.search_icon)
+    public ImageView searchIcon;
+
+    private void searchClick() {
+        String s = searchEditView.getText().toString();
+        if (!TextUtils.isEmpty(s)) {
+            searchPresenter.doSearch(s);
+        }
+    }
+
 
     @Override
     protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
@@ -35,6 +61,11 @@ public class SearchFragment extends BaseFragment implements ISearchCallback {
     @Override
     protected void initView(View view) {
         setUpState(State.SUCCESS);
+    }
+
+    @Override
+    protected void initListener() {
+        textFlowLayout.setOnFlowTextItemClickListener(this);
     }
 
     @Override
@@ -70,8 +101,9 @@ public class SearchFragment extends BaseFragment implements ISearchCallback {
 
     @Override
     public void onRecommendWordsLoaded(List<String> recommendWords) {
-        //TODO 回显推荐词
+        //回显推荐词
         LogUtils.d(this, recommendWords.toString());
+        textFlowLayout.setTextList(recommendWords);
     }
 
     @Override
@@ -111,5 +143,8 @@ public class SearchFragment extends BaseFragment implements ISearchCallback {
         ToastUtils.show("没有更多数据了");
     }
 
-
+    @Override
+    public void onFlowItemClick(String text) {
+        searchPresenter.doSearch(text);
+    }
 }

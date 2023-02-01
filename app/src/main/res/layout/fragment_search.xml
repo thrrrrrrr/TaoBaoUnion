@@ -9,10 +9,9 @@
 
 <!--    推荐关键字-->
     <com.thr.taobaounion.ui.custom.TextFlowLayout
+        android:id="@+id/search_flow_text_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        thr:mItemVerticalSpace = "20px"
-        thr:mItemHorizontalSpace = "20px" />
+        android:layout_height="wrap_content" />
 
 <!--    搜索结果-->
 
