@@ -1,5 +1,6 @@
 package com.thr.taobaounion.presenter.impl;
 
+import com.thr.taobaounion.model.domain.Histories;
 import com.thr.taobaounion.model.domain.SearchRecommend;
 import com.thr.taobaounion.model.domain.SearchResult;
 import com.thr.taobaounion.presenter.ISearchPresenter;
@@ -24,38 +25,58 @@ public class SearchPresenterImpl implements ISearchPresenter {
 
     private final String KEY_HISTORIES = "key_histories";
 
-    @Override
-    public void saveHistory(String data) {
-//        //如果已经存在，就干掉，再更新
-//        JsonCacheUtil jsonCacheUtil = JsonCacheUtil.getInstance();
-//        Histories data = jsonCacheUtil.getValue(KEY_HISTORIES, Histories.class);
-//        if (data != null && data.getHistories() != null) {
-//            List<String> historiesList = data.getHistories();
-//            if (historiesList.contains(history)) {
-//                historiesList.remove(history);
-//            }
-//        }//去重完成
-//
-//        //对个数限制
-    }
+    private final int MAX_COUNT = 10;
 
     @Override
     public void getHistories() {
-        List<String> temp = new ArrayList<>();
-        temp.add("aa");
-        temp.add("bb");
-        temp.add("cc");
-        mCallback.onHistoriesLoaded(temp);
+//        ArrayList<String> list = new ArrayList<>();
+//        list.add("aaa");
+//        list.add("aaa");
+//        list.add("aasdafa");
+//        list.add("aabbbba");
+//        list.add("aabbbba");
+//        list.add("aabbbba");
+        Histories histories = JsonCacheUtil.getInstance().getValue(KEY_HISTORIES);
+        if (histories == null || histories.getList() == null || histories.getList().size() == 0) {
+            mCallback.onHistoriesLoaded(null);
+            LogUtils.d(this, "历史记录为空");
+        }else {
+            mCallback.onHistoriesLoaded(histories.getList());
+            LogUtils.d(this, "历史记录加载：" + histories.getList());
+        }
     }
 
     @Override
     public void delHistories() {
-        //缓存中清除历史记录缓存
+        JsonCacheUtil.getInstance().delCache(KEY_HISTORIES);
+        mCallback.onHistoriesLoaded(null);
+    }
+
+    public void saveHistory(String history) {
+        Histories histories = JsonCacheUtil.getInstance().getValue(KEY_HISTORIES);
+        List<String> list = null;
+        if (histories == null) {
+            list = new ArrayList<>();
+        } else {
+            list = histories.getList();
+        }
+        if (list.contains(history)) {
+            list.remove(history);
+            list.add(history);
+        } else {
+            list.add(history);
+        }
+        if (list.size() > MAX_COUNT) {
+            list = list.subList(1, MAX_COUNT+1);
+        }
+        JsonCacheUtil.getInstance().saveCache(KEY_HISTORIES, new Histories(new ArrayList<>(list)));
+        mCallback.onHistoriesLoaded(list);
     }
 
     @Override
     public void doSearch(String keyWord) {
         mKeyWord = keyWord;
+        this.saveHistory(mKeyWord);
         if (mCallback != null) {
             mCallback.onLoading();
         }
@@ -159,6 +180,7 @@ public class SearchPresenterImpl implements ISearchPresenter {
                     List<String> data = response.body().getList();
 //                    LogUtils.d(this, data.toString());
                     mCallback.onRecommendWordsLoaded(data);
+
                 } else {
                     //
                 }

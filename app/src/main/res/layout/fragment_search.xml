@@ -1,18 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:thr="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:thr="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_bg_page"
     android:orientation="vertical">
 
-<!--    历史记录-->
-
-<!--    推荐关键字-->
-    <com.thr.taobaounion.ui.custom.TextFlowLayout
-        android:id="@+id/search_flow_text_layout"
+    <!--    历史记录-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-<!--    搜索结果-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/search_history_bar"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_history"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/search_history_del"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:src="@mipmap/delete_icon" />
+
+        </RelativeLayout>
+
+        <com.thr.taobaounion.ui.custom.TextFlowLayout
+            android:id="@+id/search_history_flow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            thr:mItemHorizontalSpace="10dp"
+            thr:mItemVerticalSpace="10dp" />
+
+    </LinearLayout>
+
+    <!--    推荐关键字-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_search_hot"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <com.thr.taobaounion.ui.custom.TextFlowLayout
+            android:id="@+id/search_flow_text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            thr:mItemHorizontalSpace="10dp"
+            thr:mItemVerticalSpace="10dp" />
+
+    </LinearLayout>
+
+    <!--    搜索结果-->
 
 </LinearLayout>

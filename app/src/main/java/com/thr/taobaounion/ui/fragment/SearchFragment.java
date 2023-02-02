@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.thr.taobaounion.R;
 import com.thr.taobaounion.base.BaseFragment;
@@ -19,10 +20,12 @@ import com.thr.taobaounion.utils.PresenterManager;
 import com.thr.taobaounion.utils.ToastUtils;
 import com.thr.taobaounion.view.ISearchCallback;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SearchFragment extends BaseFragment implements ISearchCallback, TextFlowLayout.OnFlowTextItemClickListener {
 
@@ -30,17 +33,25 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
 
     private String mKeyWord;
 
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.search_flow_text_layout)
     public TextFlowLayout textFlowLayout;
+
+    @BindView(R.id.search_history_flow)
+    public TextFlowLayout searchHistoryFlow;
 
     @BindView(R.id.search_edit_view)
     public EditText searchEditView;
 
-    @BindView(R.id.search_icon)
-    public ImageView searchIcon;
+    @BindView(R.id.search_history_bar)
+    public RelativeLayout searchHistoryBar;
 
-    private void searchClick() {
+    @OnClick(R.id.search_history_del)
+    public void deleteClick() {
+        searchPresenter.delHistories();
+    }
+
+    @OnClick(R.id.search_icon)
+    public void searchClick() {
         String s = searchEditView.getText().toString();
         if (!TextUtils.isEmpty(s)) {
             searchPresenter.doSearch(s);
@@ -74,7 +85,7 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
         searchPresenter.registerViewCallback(this);
         //获取推荐词
         searchPresenter.getRecommendWords();
-        searchPresenter.doSearch("连衣裙");
+        searchPresenter.getHistories();
     }
 
     @Override
@@ -91,7 +102,13 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
 
     @Override
     public void onHistoriesLoaded(List<String> list) {
-
+        if (list == null || list.size() == 0) {
+            searchHistoryFlow.setVisibility(View.GONE);
+            searchHistoryBar.setVisibility(View.GONE);
+        } else {
+            Collections.reverse(list);
+            searchHistoryFlow.setTextList(list);
+        }
     }
 
     @Override
@@ -104,6 +121,8 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
         //回显推荐词
         LogUtils.d(this, recommendWords.toString());
         textFlowLayout.setTextList(recommendWords);
+        searchEditView.setHint(recommendWords.get(0));
+
     }
 
     @Override

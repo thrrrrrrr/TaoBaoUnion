@@ -14,4 +14,5 @@
     <color name="colorTabNormal">#99ffffff</color>
     <color name="color_tmall">#d0021b</color>
     <color name="color_bg_page">#efeeee</color>
+    <color name="color_flow_bg">#bbffffff</color>
 </resources>

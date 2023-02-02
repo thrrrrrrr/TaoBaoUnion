@@ -25,11 +25,11 @@
             android:id="@+id/search_edit_view"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:singleLine="true"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/search_icon"
             android:layout_toRightOf="@+id/search_back"
             android:background="@drawable/shape_edit_box_bg"
-            android:focusable="false"
             android:hint="@string/text_search_tips"
             android:textSize="13sp" />
 

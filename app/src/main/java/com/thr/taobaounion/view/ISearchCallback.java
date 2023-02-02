@@ -1,6 +1,7 @@
 package com.thr.taobaounion.view;
 
 import com.thr.taobaounion.base.IBaseCallback;
+import com.thr.taobaounion.model.domain.Histories;
 import com.thr.taobaounion.model.domain.SearchResult;
 
 import java.util.List;

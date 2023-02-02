@@ -5,58 +5,48 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.thr.taobaounion.base.BaseApplication;
-import com.thr.taobaounion.model.domain.CacheWithDuration;
+import com.thr.taobaounion.model.domain.Histories;
 
 public class JsonCacheUtil {
 
-    private final String jsonCacheSpName = "json_cache_sp_name";
-    private final SharedPreferences sharedPreferences;
-    private final Gson gson;
+    public static final String JSON_CACHE_SP_NAME = "json_cache_sp_name";
+
+    private final SharedPreferences mSp;
+    private final Gson mGson;
 
     private JsonCacheUtil() {
-        sharedPreferences = BaseApplication.getAppContext().getSharedPreferences(jsonCacheSpName, Context.MODE_PRIVATE);
-        gson = new Gson();
+        mSp = BaseApplication.getAppContext().getSharedPreferences(JSON_CACHE_SP_NAME, Context.MODE_PRIVATE);
+        mGson = new Gson();
     }
+
+    private static JsonCacheUtil sJsonCacheUtil = null;
+
+    public static JsonCacheUtil getInstance() {
+        if (sJsonCacheUtil == null) {
+            sJsonCacheUtil = new JsonCacheUtil();
+        }
+        return sJsonCacheUtil;
+    }
+
 
     public void saveCache(String key, Object value) {
-        this.saveCache(key, value, System.currentTimeMillis() + 1000*20);
-    }
+        String valueStr = mGson.toJson(value);
 
-    public void saveCache(String key, Object value, long duration) {
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        //保存数据，带时间
-        CacheWithDuration cacheWithDuration = new CacheWithDuration(value, duration);
-        String cache = gson.toJson(cacheWithDuration);
-        edit.putString(key, cache);
-        edit.apply();
+        SharedPreferences.Editor editor = mSp.edit();
+        editor.putString(key, valueStr);
+        editor.apply();
     }
 
     public void delCache(String key) {
-        sharedPreferences.edit().remove(key).apply();
+        mSp.edit().remove(key).apply();
     }
 
-    public <T> T getValue(String key, Class<T> clazz) {
-        String string = sharedPreferences.getString(key, null);
-        if (string == null) {
+    public Histories getValue(String key) {
+        String value = mSp.getString(key, null);
+        if (value == null) {
             return null;
         }
-        CacheWithDuration cacheWithDuration = gson.fromJson(string, CacheWithDuration.class);
-        if (cacheWithDuration.getDuration() < System.currentTimeMillis()) {
-            //过期了
-            return null;
-        } else {
-            //没过期
-            Object value = cacheWithDuration.getValue();
-            return (T)value;
-        }
-    }
-
-    private static JsonCacheUtil jsonCacheUtil = null;
-
-    public static JsonCacheUtil getInstance() {
-        if (jsonCacheUtil == null) {
-            jsonCacheUtil = new JsonCacheUtil();
-        }
-        return jsonCacheUtil;
+        Histories histories = mGson.fromJson(value, Histories.class);
+        return histories;
     }
 }

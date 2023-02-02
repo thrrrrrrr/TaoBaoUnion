@@ -43,6 +43,10 @@ public class TextFlowLayout extends ViewGroup {
 
     public TextFlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextFlowLayout);
+        mItemHorizontalSpace = typedArray.getDimension(R.styleable.TextFlowLayout_mItemHorizontalSpace, DEFAULT_SPACE);
+        mItemVerticalSpace = typedArray.getDimension(R.styleable.TextFlowLayout_mItemVerticalSpace, DEFAULT_SPACE);
+        typedArray.recycle();
     }
 
     public void setTextList(List<String> textList) {

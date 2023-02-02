@@ -49,7 +49,7 @@ public class HomePagerContent {
         this.data = data;
     }
 
-    public static class DataBean implements IBaseInfo {
+    public static class DataBean implements IBaseInfo, ILinearItemInfo{
 
         private int category_id;
         private String click_url;

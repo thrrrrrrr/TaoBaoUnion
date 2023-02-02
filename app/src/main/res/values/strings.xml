@@ -12,4 +12,6 @@
     <string name="text_loading">加载中..</string>
     <string name="text_load_img_error">加载图片失败</string>
     <string name="text_sale_title">特惠宝贝</string>
+    <string name="text_history">历史记录</string>
+    <string name="text_search_hot">热门推荐</string>
 </resources>
