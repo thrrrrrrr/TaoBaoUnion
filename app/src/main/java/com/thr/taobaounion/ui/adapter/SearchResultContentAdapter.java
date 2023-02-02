@@ -1,6 +1,5 @@
 package com.thr.taobaounion.ui.adapter;
 
-import android.app.role.RoleManager;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,22 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.GlideUrl;
 import com.thr.taobaounion.R;
 import com.thr.taobaounion.model.domain.HomePagerContent;
+import com.thr.taobaounion.model.domain.SearchResult;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.UrlUtils;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerContentAdapter.InnerHolder> {
+public class SearchResultContentAdapter extends RecyclerView.Adapter<SearchResultContentAdapter.InnerHolder> {
 
-    private List<HomePagerContent.DataBean> data = new ArrayList<>();
+    private List<SearchResult.DataBean.TbkDgMaterialOptionalResponseBean.ResultListBean.MapDataBean> data = new ArrayList<>();
     private OnListItemClickListener mItemClickListener = null;
 
     @NonNull
@@ -39,7 +37,7 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
 
     @Override
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
-        HomePagerContent.DataBean dataBean = data.get(position);
+        SearchResult.DataBean.TbkDgMaterialOptionalResponseBean.ResultListBean.MapDataBean dataBean = data.get(position);
         //设置数据
         LogUtils.d(this, "position: " + position);
         holder.setData(dataBean);//设置数据
@@ -60,7 +58,7 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
     }
 
     public interface OnListItemClickListener {
-        void onItemClick(HomePagerContent.DataBean item);
+        void onItemClick(SearchResult.DataBean.TbkDgMaterialOptionalResponseBean.ResultListBean.MapDataBean item);
     }
 
     @Override
@@ -68,13 +66,13 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
         return data.size();
     }
 
-    public void setData(List<HomePagerContent.DataBean> contents) {
+    public void setData(List<SearchResult.DataBean.TbkDgMaterialOptionalResponseBean.ResultListBean.MapDataBean> contents) {
         data.clear();
         data.addAll(contents);
         notifyDataSetChanged();
     }
 
-    public void addData(List<HomePagerContent.DataBean> contents) {
+    public void addData(List<SearchResult.DataBean.TbkDgMaterialOptionalResponseBean.ResultListBean.MapDataBean> contents) {
         int oldSize = data.size();
         data.addAll(contents);
         //通知更新
@@ -106,7 +104,7 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(HomePagerContent.DataBean dataBean) {
+        public void setData(SearchResult.DataBean.TbkDgMaterialOptionalResponseBean.ResultListBean.MapDataBean dataBean) {
             //
             title.setText(dataBean.getTitle());
             //

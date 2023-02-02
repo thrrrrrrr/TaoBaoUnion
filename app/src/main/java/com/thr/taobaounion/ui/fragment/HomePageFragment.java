@@ -22,7 +22,6 @@ import com.thr.taobaounion.R;
 import com.thr.taobaounion.base.BaseFragment;
 import com.thr.taobaounion.model.domain.Categories;
 import com.thr.taobaounion.model.domain.HomePagerContent;
-import com.thr.taobaounion.model.domain.ILinearItemInfo;
 import com.thr.taobaounion.presenter.ICategoryPagerPresenter;
 import com.thr.taobaounion.presenter.ITicketPresenter;
 import com.thr.taobaounion.ui.activity.TicketActivity;
@@ -318,7 +317,7 @@ public class HomePageFragment extends BaseFragment implements ICategoryPageCallb
 
     //实现的适配器里内部的监听器接口方法
     @Override
-    public void onItemClick(ILinearItemInfo item) {
+    public void onItemClick(HomePagerContent.DataBean item) {
         //列表被点击
 //        LogUtils.d(this, item.getTitle());
         TicketUtil.toTicketPage(getContext(), item);
