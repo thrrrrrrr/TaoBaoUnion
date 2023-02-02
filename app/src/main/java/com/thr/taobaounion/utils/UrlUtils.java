@@ -5,7 +5,7 @@ public class UrlUtils {
         if(pic_url.startsWith("http")) {
             return pic_url + "_" + size + "x" + size + ".jpg";
         } else {
-            return "http:" + pic_url + "_" + size + "x" + size + ".jpg";
+            return "https:" + pic_url + "_" + size + "x" + size + ".jpg";
         }
     }
 
@@ -13,7 +13,7 @@ public class UrlUtils {
         if(pic_url.startsWith("http")) {
             return pic_url;
         } else {
-            return "http:" + pic_url;
+            return "https:" + pic_url;
         }
     }
 }
