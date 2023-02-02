@@ -1,22 +1,38 @@
 package com.thr.taobaounion.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Rect;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.thr.taobaounion.R;
 import com.thr.taobaounion.base.BaseFragment;
 import com.thr.taobaounion.model.domain.SearchResult;
 import com.thr.taobaounion.presenter.ISearchPresenter;
+import com.thr.taobaounion.ui.adapter.HomePagerContentAdapter;
+import com.thr.taobaounion.ui.adapter.SearchResultContentAdapter;
 import com.thr.taobaounion.ui.custom.TextFlowLayout;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.PresenterManager;
+import com.thr.taobaounion.utils.TicketUtil;
 import com.thr.taobaounion.utils.ToastUtils;
 import com.thr.taobaounion.view.ISearchCallback;
 
@@ -27,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SearchFragment extends BaseFragment implements ISearchCallback, TextFlowLayout.OnFlowTextItemClickListener {
+public class SearchFragment extends BaseFragment implements ISearchCallback, TextFlowLayout.OnFlowTextItemClickListener, SearchResultContentAdapter.OnListItemClickListener {
 
     private ISearchPresenter searchPresenter;
 
@@ -45,6 +61,17 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
     @BindView(R.id.search_history_bar)
     public RelativeLayout searchHistoryBar;
 
+    @BindView(R.id.search_recommend_bar2)
+    public LinearLayout search_recommend_bar2;
+
+    @BindView(R.id.search_result_content)
+    public RecyclerView searchResultContent;
+
+    @BindView(R.id.search_refresh_more)
+    public SmartRefreshLayout search_refresh_more;
+
+    private SearchResultContentAdapter mContentListAdapter;
+
     @OnClick(R.id.search_history_del)
     public void deleteClick() {
         searchPresenter.delHistories();
@@ -55,6 +82,9 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
         String s = searchEditView.getText().toString();
         if (!TextUtils.isEmpty(s)) {
             searchPresenter.doSearch(s);
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            // 隐藏软键盘
+            imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
         }
     }
 
@@ -72,11 +102,58 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
     @Override
     protected void initView(View view) {
         setUpState(State.SUCCESS);
+        //设置布局管理器
+        searchResultContent.setLayoutManager(new LinearLayoutManager(getContext()));
+        searchResultContent.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                outRect.top = 8;
+                outRect.bottom = 8;
+            }
+        });
+        //创建适配器
+        mContentListAdapter = new SearchResultContentAdapter();
+        //设置适配器
+        searchResultContent.setAdapter(mContentListAdapter);
+
+        //loadmore
+        search_refresh_more.setEnableRefresh(false);
+        search_refresh_more.setEnableLoadMore(true);
+        search_refresh_more.setEnableAutoLoadMore(true);
+        search_refresh_more.setEnableOverScrollDrag(true);
     }
 
     @Override
     protected void initListener() {
         textFlowLayout.setOnFlowTextItemClickListener(this);
+        searchHistoryFlow.setOnFlowTextItemClickListener(this);
+        mContentListAdapter.setOnListItemClickListener(this);
+        searchEditView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                searchHistoryBar.setVisibility(View.VISIBLE);
+                searchHistoryFlow.setVisibility(View.VISIBLE);
+                search_recommend_bar2.setVisibility(View.VISIBLE);
+                searchResultContent.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        search_refresh_more.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                searchPresenter.loadMore();
+            }
+        });
     }
 
     @Override
@@ -97,7 +174,7 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
 
     @Override
     protected void onRetryClick() {
-        searchPresenter.doSearch(mKeyWord);
+        searchPresenter.doSearch(searchEditView.getText().toString());
     }
 
     @Override
@@ -108,6 +185,8 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
         } else {
             Collections.reverse(list);
             searchHistoryFlow.setTextList(list);
+            searchHistoryFlow.setVisibility(View.VISIBLE);
+            searchHistoryBar.setVisibility(View.VISIBLE);
         }
     }
 
@@ -127,9 +206,15 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
 
     @Override
     public void onSearchSuccess(SearchResult searchResult) {
-        //TODO 回显商品列表
+
         setUpState(State.SUCCESS);
         LogUtils.d(this, searchResult.toString());
+        mContentListAdapter.setData(searchResult.getList());
+
+        searchHistoryBar.setVisibility(View.GONE);
+        searchHistoryFlow.setVisibility(View.GONE);
+        search_recommend_bar2.setVisibility(View.GONE);
+        searchResultContent.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -148,8 +233,11 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
     }
 
     @Override
-    public void onLoadMoreLoaded() {
-        ToastUtils.show("加载了" + "xx"+"条数据");
+    public void onLoadMoreLoaded(SearchResult searchResult) {
+        ToastUtils.show("加载了" + searchResult.getList().size() + "条数据");
+        mContentListAdapter.addData(searchResult.getList());
+        search_refresh_more.finishLoadMore();
+
     }
 
     @Override
@@ -165,5 +253,15 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
     @Override
     public void onFlowItemClick(String text) {
         searchPresenter.doSearch(text);
+        searchEditView.setText(text);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        // 隐藏软键盘
+        imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
+
+    }
+
+    @Override
+    public void onItemClick(SearchResult.DataBean.TbkDgMaterialOptionalResponseBean.ResultListBean.MapDataBean item) {
+        TicketUtil.toTicketPage(getContext(), item);
     }
 }

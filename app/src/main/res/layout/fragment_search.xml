@@ -13,8 +13,8 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_width="match_parent"
             android:id="@+id/search_history_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
 
@@ -25,9 +25,9 @@
                 android:textSize="20sp" />
 
             <ImageView
+                android:id="@+id/search_history_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/search_history_del"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="6dp"
                 android:src="@mipmap/delete_icon" />
@@ -48,6 +48,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/search_recommend_bar2"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -73,5 +74,20 @@
     </LinearLayout>
 
     <!--    搜索结果-->
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:layout_width="match_parent"
+        android:id="@+id/search_refresh_more"
+        android:layout_height="match_parent" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_result_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.scwang.smart.refresh.footer.BallPulseFooter
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

@@ -76,7 +76,7 @@ public class SearchResultContentAdapter extends RecyclerView.Adapter<SearchResul
         int oldSize = data.size();
         data.addAll(contents);
         //通知更新
-        notifyItemRangeChanged(oldSize - 2, contents.size());
+        notifyItemRangeChanged(oldSize, contents.size());
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder {
@@ -112,10 +112,11 @@ public class SearchResultContentAdapter extends RecyclerView.Adapter<SearchResul
             int size = layoutParams.width;
             size = (size-1)/100*100 + 100;
             String url = UrlUtils.getCoverPath(dataBean.getPict_url(), size);
+            LogUtils.d(this, url);
             Glide.with(itemView.getContext()).load(url).into(cover);
             //
             //LogUtils.d(this, "优惠" + dataBean.getCoupon_amount());
-            goodsOffPrice.setText(String.format(itemView.getContext().getString(R.string.item_off_price), dataBean.getCoupon_amount()));
+            goodsOffPrice.setText(String.format(itemView.getContext().getString(R.string.item_off_price), (int)dataBean.getCoupon_amount()));
             //
             double finalPrice = dataBean.getZk_final_price() - dataBean.getCoupon_amount();
             //LogUtils.d(this, "折后价" + finalPrice);

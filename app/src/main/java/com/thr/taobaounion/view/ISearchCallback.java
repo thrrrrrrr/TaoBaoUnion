@@ -14,7 +14,7 @@ public interface ISearchCallback extends IBaseCallback {
 
     void onSearchSuccess(SearchResult searchResult);
 
-    void onLoadMoreLoaded();
+    void onLoadMoreLoaded(SearchResult searchResult);
 
     void onLoadMoreError();
 

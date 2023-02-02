@@ -1,5 +1,8 @@
 package com.thr.taobaounion.presenter.impl;
 
+import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
+
 import com.thr.taobaounion.model.domain.Histories;
 import com.thr.taobaounion.model.domain.SearchRecommend;
 import com.thr.taobaounion.model.domain.SearchResult;
@@ -162,9 +165,9 @@ public class SearchPresenterImpl implements ISearchPresenter {
         if (mCallback != null) {
             int size = body.getList().size();
             if (size == 0) {
-                mCallback.onEmpty();
+                mCallback.onLoadMoreEmpty();
             } else {
-                mCallback.onSearchSuccess(body); //把数据传给ui层
+                mCallback.onLoadMoreLoaded(body); //把数据传给ui层
             }
         }
     }
