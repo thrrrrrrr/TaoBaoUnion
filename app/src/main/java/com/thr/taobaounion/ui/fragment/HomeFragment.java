@@ -3,7 +3,9 @@ package com.thr.taobaounion.ui.fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -12,12 +14,14 @@ import com.thr.taobaounion.base.BaseFragment;
 import com.thr.taobaounion.model.domain.Categories;
 import com.thr.taobaounion.presenter.IHomePresenter;
 import com.thr.taobaounion.presenter.impl.HomePresenterImpl;
+import com.thr.taobaounion.ui.activity.MainActivity;
 import com.thr.taobaounion.ui.adapter.HomePagerAdapter;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.PresenterManager;
 import com.thr.taobaounion.view.IHomeCallback;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class HomeFragment extends BaseFragment implements IHomeCallback {
 
@@ -26,6 +30,14 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
 
     @BindView(R.id.home_pager)
     public ViewPager mHomePager;
+
+    @OnClick(R.id.home_search_edit_text)
+    public void onSearchClick() {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            ((MainActivity) activity).switch2SearchFragment();
+        }
+    }
 
     private IHomePresenter homePresenter;
     private HomePagerAdapter homePagerAdapter;

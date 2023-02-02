@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,9 +31,11 @@ import com.thr.taobaounion.R;
 import com.thr.taobaounion.base.BaseFragment;
 import com.thr.taobaounion.model.domain.SearchResult;
 import com.thr.taobaounion.presenter.ISearchPresenter;
+import com.thr.taobaounion.ui.activity.MainActivity;
 import com.thr.taobaounion.ui.adapter.HomePagerContentAdapter;
 import com.thr.taobaounion.ui.adapter.SearchResultContentAdapter;
 import com.thr.taobaounion.ui.custom.TextFlowLayout;
+import com.thr.taobaounion.utils.KeyBoardUtil;
 import com.thr.taobaounion.utils.LogUtils;
 import com.thr.taobaounion.utils.PresenterManager;
 import com.thr.taobaounion.utils.TicketUtil;
@@ -85,9 +88,16 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
         String s = searchEditView.getText().toString();
         if (!TextUtils.isEmpty(s)) {
             searchPresenter.doSearch(s);
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            // 隐藏软键盘
-            imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
+            KeyBoardUtil.hide(getActivity());
+        }
+    }
+
+    @OnClick(R.id.search_back)
+    public void backClick() {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            ((MainActivity) activity).switch2HomeFragment();
+            KeyBoardUtil.hide(getActivity());
         }
     }
 
@@ -134,8 +144,7 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
         searchEditView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                searchHistoryBar.setVisibility(View.VISIBLE);
-                searchHistoryFlow.setVisibility(View.VISIBLE);
+                searchPresenter.getHistories();
                 search_recommend_bar2.setVisibility(View.VISIBLE);
                 searchResultContent.setVisibility(View.GONE);
             }
@@ -196,6 +205,7 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
     @Override
     public void onHistoriesLoaded(List<String> list) {
         if (list == null || list.size() == 0) {
+            LogUtils.d(this, "这里");
             searchHistoryFlow.setVisibility(View.GONE);
             searchHistoryBar.setVisibility(View.GONE);
         } else {
@@ -226,6 +236,8 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
         setUpState(State.SUCCESS);
         LogUtils.d(this, searchResult.toString());
         mContentListAdapter.setData(searchResult.getList());
+
+        searchResultContent.scrollToPosition(0);
 
         searchHistoryBar.setVisibility(View.GONE);
         searchHistoryFlow.setVisibility(View.GONE);
@@ -270,10 +282,9 @@ public class SearchFragment extends BaseFragment implements ISearchCallback, Tex
     public void onFlowItemClick(String text) {
         searchPresenter.doSearch(text);
         searchEditView.setText(text);
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        // 隐藏软键盘
-        imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
-
+        searchEditView.setFocusable(true);
+        searchEditView.setSelection(text.length());
+        KeyBoardUtil.hide(getActivity());
     }
 
     @Override

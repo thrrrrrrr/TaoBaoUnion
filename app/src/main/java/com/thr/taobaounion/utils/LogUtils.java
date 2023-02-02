@@ -3,7 +3,7 @@ package com.thr.taobaounion.utils;
 import android.util.Log;
 
 public class LogUtils {
-    public static int current = 4;
+    public static int current = 1;
     public static final int debugLev = 4;
     public static final int infoLev = 3;
     public static final int warningLev = 2;

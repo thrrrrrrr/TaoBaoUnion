@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -70,6 +73,7 @@ public class MainActivity extends BaseAvtivity {
             }
             return true;
         });
+
     }
 
     private BaseFragment lastOneFragment = null;
@@ -87,5 +91,11 @@ public class MainActivity extends BaseAvtivity {
         transaction.commit();
     }
 
+    public void switch2SearchFragment() {
+        navigationView.setSelectedItemId(R.id.search);
+    }
 
+    public void switch2HomeFragment() {
+        navigationView.setSelectedItemId(R.id.home);
+    }
 }
